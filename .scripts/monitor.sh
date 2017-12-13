@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Automatically configure monitors when plugged in
+
 # default monitor is LVDS1
 MONITOR=LVDS1+VGA1
 
