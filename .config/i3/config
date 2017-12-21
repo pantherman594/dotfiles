@@ -221,10 +221,10 @@ bindsym $mod+r mode "resize"
 # Widow Colours
 
 # class                 border      backgr.     text  indicator child_border
-client.focused          $color1     $color1     $fg   $ind      $color4
-client.focused_inactive $color4     $color4     $fg   $ind      $color4
-client.unfocused        $color4     $color4     $fg   $ind      $color4
-client.urgent           $u-bg-color $u-bg-color $fg   $ind      $color4
+client.focused          $color4     $color4     $fg   $ind      $color1
+client.focused_inactive $color1     $color1     $fg   $ind      $color1
+client.unfocused        $color1     $color1     $fg   $ind      $color1
+client.urgent           $u-bg-color $u-bg-color $fg   $ind      $color1
 client.placeholder      $bg         $bg         $fg   $ind      $bg
 
 new_window none
@@ -278,6 +278,7 @@ bindsym $mod+Shift+less move workspace to output left
 bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/screenshot.sh -s
 
 # Set wallpaper
+exec wal -i /usr/share/backgrounds/pantherman594/wallpaper.jpg
 exec_always --no-startup-id ~/.scripts/wallpaper.sh
 
 # Set autolock after 2 min of inactivity

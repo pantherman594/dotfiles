@@ -100,3 +100,10 @@ EDITOR=nano
 
 # Import colorscheme from 'wal'
 (wal -r &)
+
+eval $(thefuck --alias)
+
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*:trizen:*' command 'echo tab'
