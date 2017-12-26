@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#exit
 #SR=$(xrandr --query | grep ' connected primary' | grep -o '[0-9][0-9]*x[0-9][0-9]*[^ ]*')
 # Array: width, height, x offset, y offset
 #SRA=(${SR//[x+]/ })
@@ -16,7 +17,7 @@ SIZE=$(xrandr | awk '($7 == "current" ){print $8"x"$10}' | sed s/,// )
 ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -i ~/Pictures/overlay.png -filter_complex "[0:v]boxblur=5[base],[1:v]scale=215:80[ovrl],[base][ovrl]overlay=25:main_h-overlay_h-25" -vframes 1 $SCREEN
 #convert $SCREEN -draw "fill black fill-opacity 0.5 $rectangle" $SCREEN
 
-#xset dpms force off
+xset dpms force off
 
 i3lock \
     -e -i $SCREEN --screen=0 --indicator \
