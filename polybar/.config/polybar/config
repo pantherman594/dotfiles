@@ -72,7 +72,7 @@ monitor = LVDS1
 
 modules-left = bspwm i3
 modules-center = date time
-modules-right = volume wlan eth battery redshift toolbox powermenu
+modules-right = volume wlan eth battery redshift caffine powermenu
 
 i3-pin-workspaces = false
 
@@ -366,14 +366,16 @@ ramp-3 = 
 ramp-4 = 
 
 [module/redshift]
-type = custom/text
-content = 
-click-left = ~/.scripts/redshift.sh
+type = custom/script
+tail = true
+exec = ~/.config/polybar/redshift.sh
+click-left = ~/.scripts/toggle_redshift.sh
 
-[module/toolbox]
-type = custom/text
-content = 
-click-left = jetbrains-toolbox
+[module/caffine]
+type = custom/script
+tail = true
+exec = ~/.config/polybar/caffine.sh
+click-left = ~/.scripts/toggle_caffine.sh
 
 [module/powermenu]
 type = custom/menu

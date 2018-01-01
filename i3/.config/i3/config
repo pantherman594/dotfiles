@@ -247,7 +247,7 @@ exec_always ~/.scripts/polybar.sh # should be reloaded by WeatherDesk
 # }
 
 # Lock screen
-bindsym $mod+Shift+x exec ~/.scripts/lock.sh #i3lock -c 000000 && xset dpms force off
+bindsym $mod+Shift+x exec ~/.scripts/lock_actual.sh #i3lock -c 000000 && xset dpms force off
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume

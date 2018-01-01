@@ -1,3 +1,5 @@
+#include ".config/polybar/caffine_off"
+
 Xft.antialias: 1
 Xft.dpi: 96
 Xft.hinting: 0

@@ -107,3 +107,4 @@ autoload -Uz compinit
 compinit
 
 zstyle ':completion:*:trizen:*' command 'echo tab'
+screenfetch
