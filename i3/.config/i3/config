@@ -124,14 +124,15 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # name workspaces
-# Firefox
-set $w1 "1 "
+# Web
+set $w1 "1 "
 # Files
 set $w2 "2 "
 # Terminals
 set $w3 "3 "
 # Editors
 set $w4 "4 "
+
 #set $w1 "1"
 #set $w2 "2"
 #set $w3 "3"
@@ -155,6 +156,17 @@ bindsym $mod+8 workspace $w8
 bindsym $mod+9 workspace $w9
 bindsym $mod+0 workspace $w10
 
+bindsym $mod+Control+j workspace $w1
+bindsym $mod+Control+k workspace $w2
+bindsym $mod+Control+l workspace $w3
+bindsym $mod+Control+semicolon workspace $w4
+bindsym $mod+Control+u workspace $w5
+bindsym $mod+Control+i workspace $w6
+bindsym $mod+Control+o workspace $w7
+bindsym $mod+Control+p workspace $w8
+bindsym $mod+Control+n workspace $w9
+bindsym $mod+Control+m workspace $w10
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $w1
 bindsym $mod+Shift+2 move container to workspace $w2
@@ -167,17 +179,25 @@ bindsym $mod+Shift+8 move container to workspace $w8
 bindsym $mod+Shift+9 move container to workspace $w9
 bindsym $mod+Shift+0 move container to workspace $w10
 
+bindsym $mod+Control+Shift+j workspace $w1
+bindsym $mod+Control+Shift+k workspace $w2
+bindsym $mod+Control+Shift+l workspace $w3
+bindsym $mod+Control+Shift+semicolon workspace $w4
+bindsym $mod+Control+Shift+u workspace $w5
+bindsym $mod+Control+Shift+i workspace $w6
+bindsym $mod+Control+Shift+o workspace $w7
+bindsym $mod+Control+Shift+p workspace $w8
+bindsym $mod+Control+Shift+n workspace $w9
+bindsym $mod+Control+Shift+m workspace $w10
+
 # open random empty worksapce
 bindsym $mod+z exec --no-startup-id i3-msg "workspace 9`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 3 | head -n 1`"
 
 # assign programs to workspaces
-assign [class="Firefox"] $w1
+assign [class="Vivaldi-stable"] $w1
 
-assign [class="Nemo"] $w2
-assign [class="Nautilus"] $w2
 assign [class="Thunar"] $w2
 
-assign [class="Gnome-terminal"] $w3
 assign [class="URxvt"] $w3
 
 assign [class="Code"] $w4
@@ -292,7 +312,7 @@ exec_always xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabl
 exec autotrash -d 30
 
 # Startup Programs
-exec firefox
+exec vivaldi-stable
 exec i3-sensible-terminal
 exec node ~/Documents/Programming/Trello/Trello.js
 exec megasync

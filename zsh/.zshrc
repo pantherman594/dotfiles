@@ -98,8 +98,10 @@ source $ZSH/oh-my-zsh.sh
 
 EDITOR=nano
 
+. ~/.bash_aliases
+
 # Import colorscheme from 'wal'
-(wal -r &)
+(cat /home/pantherman594/.cache/wal/sequences &)
 
 eval $(thefuck --alias)
 
