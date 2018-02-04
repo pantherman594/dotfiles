@@ -3,7 +3,7 @@ rofi.eh: 2
 rofi.bw: 0
 rofi.padding: 150
 rofi.fullscreen: true
-!rofi.color-window: #cc2f343f,#00262930,#002f343f
-!rofi.color-normal: #002f343f,#f3f4f5,#002f343f,#08ffffff,#00aae3
+rofi.color-window: #cc2f343f,#00262930,#002f343f
+rofi.color-normal: #002f343f,#f3f4f5,#002f343f,#08ffffff,#00aae3
 rofi.font: Oxygen 16
 rofi.modi: drun,find:~/Documents/Programming/Scripts/finder.sh,ssh,window

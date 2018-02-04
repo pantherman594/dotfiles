@@ -96,7 +96,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-EDITOR=nano
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 
 . ~/.bash_aliases
 

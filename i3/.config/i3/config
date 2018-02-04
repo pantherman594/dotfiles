@@ -314,7 +314,7 @@ exec autotrash -d 30
 # Startup Programs
 exec vivaldi-stable
 exec i3-sensible-terminal
-exec node ~/Documents/Programming/Trello/Trello.js
+#exec node ~/Documents/Programming/Trello/Trello.js
 exec megasync
 exec_always ~/.scripts/compton.sh
 exec --no-startup-id numpadx on
