@@ -1,9 +1,7 @@
 #!/bin/bash
 
-echo "RUNN" >> ~/.scripts/redlog
 if pgrep -x "redshift" > /dev/null
 then
-    echo "kill" >> ~/.scripts/redlog
     killall redshift
 else
     urxvt -e redshift &
