@@ -18,6 +18,6 @@ do
         show "%{F#FFFFFF}$icon"
     fi
     sleep 30 &
-    echo ${!} > ~/.config/polybar/caff_pid
+    echo ${!} > ~/.config/polybar/caffine.pid
     wait ${!} 2>/dev/null
 done

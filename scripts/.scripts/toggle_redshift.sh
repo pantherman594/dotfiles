@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RED_PID=~/.config/polybar/red_pid
+RED_PID=~/.config/polybar/redshift.pid
 
 if pgrep -x "redshift" > /dev/null
 then
@@ -18,8 +18,10 @@ then
         fi
     done
 else
-    urxvt -e redshift &
-    sleep 2
-    i3-msg "[title=redshift] move container to workspace 99rs"
+    title=rsbg$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
+    urxvt -title ${title} -e sh -c "redshift" &
+    sleep 0.25
+    i3-msg "[title=${title}] move scratchpad"
+    sleep 1
 fi
 kill $(cat $RED_PID)

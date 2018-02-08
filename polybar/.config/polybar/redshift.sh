@@ -18,6 +18,6 @@ do
         show "%{F#FFFFFF}$icon"
     fi
     sleep 30 &
-    echo ${!} > ~/.config/polybar/red_pid
+    echo ${!} > ~/.config/polybar/redshift.pid
     wait ${!} 2>/dev/null
 done

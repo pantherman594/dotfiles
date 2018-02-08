@@ -2,7 +2,7 @@
 
 CAFF_ON=~/.config/polybar/caffine_on
 CAFF_OFF=~/.config/polybar/caffine_off
-CAFF_PID=~/.config/polybar/caff_pid
+CAFF_PID=~/.config/polybar/caffine.pid
 
 if xrdb -query | grep -q "`cat $CAFF_ON`"
 then

@@ -191,7 +191,7 @@ bindsym $mod+Control+Shift+n workspace $w9
 bindsym $mod+Control+Shift+m workspace $w10
 
 # open random empty worksapce
-bindsym $mod+z exec --no-startup-id i3-msg "workspace 9`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 3 | head -n 1`"
+bindsym $mod+z exec --no-startup-id i3-msg "workspace 9$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 3 | head -n 1)"
 
 # assign programs to workspaces
 assign [class="Vivaldi-stable"] $w1
@@ -204,6 +204,8 @@ assign [class="Code"] $w4
 assign [class="Toolbox"] $w4
 assign [class="jetbrains-idea"] $w4
 assign [class="Processing"] $w4
+
+assign [class="URxvt" instance="99rs"] 99rs
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -317,6 +319,7 @@ exec i3-sensible-terminal
 #exec node ~/Documents/Programming/Trello/Trello.js
 exec megasync
 exec_always ~/.scripts/compton.sh
+exec ~/.scripts/toggle_redshift.sh
 exec --no-startup-id numpadx on
 # Update file index
 exec --no-startup-id find / -iname "*" 2>&1 | grep -v 'Permission denied\|Input/output error' > ~/.fileindex
