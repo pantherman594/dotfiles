@@ -17,4 +17,5 @@ do
     else
         show "%{F#FFFFFF}$icon"
     fi
+    sleep 1
 done

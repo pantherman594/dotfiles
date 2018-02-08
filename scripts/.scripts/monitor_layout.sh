@@ -111,7 +111,7 @@ function gen_entries() {
 PREV=$(xrandr)
 
 # Call menu
-SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup:" -a 0 -no-custom  | awk '{print $1}' )
+SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup" -a 0 -no-custom  | awk '{print $1}' )
 
 # Call xrandr
 $( ${COMMANDS[$SEL]} )
