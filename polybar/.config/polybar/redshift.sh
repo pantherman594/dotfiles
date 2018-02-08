@@ -17,5 +17,7 @@ do
     else
         show "%{F#FFFFFF}$icon"
     fi
-    sleep 1
+    sleep 30 &
+    echo ${!} > ~/.config/polybar/red_pid
+    wait ${!} 2>/dev/null
 done
