@@ -8,7 +8,7 @@ do
     charge=${charge:0:-1}
     percent=$(acpi | cut -d' ' -f4)
     percent=${percent:0:-2}
-    if [[ $charge == 'Charging' ]]; then
+    if [[ $charge == 'Charging' || $charge == 'Full' ]]; then
         firstWarning=false
         secondWarning=false
     else
