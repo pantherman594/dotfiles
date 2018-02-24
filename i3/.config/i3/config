@@ -320,6 +320,7 @@ exec i3-sensible-terminal
 exec megasync
 exec_always ~/.scripts/compton.sh
 exec ~/.scripts/toggle_redshift.sh
+exec ~/.scripts/battery.sh
 exec --no-startup-id numpadx on
 # Update file index
 exec --no-startup-id find / -iname "*" 2>&1 | grep -v 'Permission denied\|Input/output error' > ~/.fileindex
