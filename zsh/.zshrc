@@ -63,6 +63,8 @@ DEFAULT_USER="pantherman594"
 plugins=(
   git pyhton ruby
   sudo archlinux common-aliases
+  zsh-autosuggestions
+  zsh-syntax-highlighting # Must be last
 )
 
 source $ZSH/oh-my-zsh.sh
