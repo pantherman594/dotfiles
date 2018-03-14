@@ -29,7 +29,7 @@ i3lock \
     --insidevercolor=f2cf4dff --insidewrongcolor=d23c3dff \
     --timefont=Oxygen --datefont=Oxygen \
     --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+200:h+y-65" \
-    --radius=20 --textsize=0 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
+    --radius=20 --textsize=1 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
     --textcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff
 
 rm $SCREEN

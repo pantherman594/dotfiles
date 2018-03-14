@@ -2,7 +2,7 @@
 
 ID=$(ps aux | grep WeatherDesk | grep .py | awk '( $11 == "python3" ){ print $2 }')
 
-if [ $ID ]
+if [[ $ID ]]
 then
     kill $ID
 fi
