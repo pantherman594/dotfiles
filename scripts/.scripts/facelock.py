@@ -4,6 +4,7 @@ import cv2
 import numpy
 import os
 import subprocess
+import signal
 import time
 import calendar
 
@@ -163,7 +164,14 @@ while True:
 
         if match:
             no_match_count = 0
-            subprocess.run(["killall", "i3lock", "-q", "-o 2s"])
+            p = subprocess.Popen(["ps", "-A", "-o", "pid,etime,comm"], stdout=subprocess.PIPE)
+            out,err = p.communicate()
+            for line in out.decode("utf-8").splitlines():
+                if 'i3lock' in line:
+                    data = line.split(None, 3)
+                    etime = data[1].split(':')
+                    if len(etime) > 2 or int(etime[0]) > 0 or int(etime[1]) > 1:
+                        os.kill(int(data[0]), signal.SIGTERM)
         else:
             no_match_count += 1
             print(no_match_count)
