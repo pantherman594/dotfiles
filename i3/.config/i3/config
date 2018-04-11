@@ -207,6 +207,9 @@ assign [class="Processing"] $w4
 
 assign [class="URxvt" instance="99rs"] 99rs
 
+bindsym $mod+o move container to scratchpad
+bindsym $mod+Shift+o scratchpad show
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -300,7 +303,6 @@ bindsym $mod+Shift+less move workspace to output left
 bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/screenshot.sh -s
 
 # Set wallpaper
-exec wal -i /usr/share/backgrounds/pantherman594/wallpaper.jpg
 exec_always --no-startup-id ~/.scripts/wallpaper.sh
 
 # Set autolock after 2 min of inactivity

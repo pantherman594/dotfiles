@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/pantherman594/Documents/Programming/BibleAcronym/bibles/ESV'
 let g:netrw_dirhist_2='/home/pantherman594/Documents/Programming/BibleAcronym/bibles/NIV'
+let g:netrw_dirhist_3='/home/pantherman594/.config/vivaldi/Default/Storage'
+let g:netrw_dirhist_4='/home/pantherman594/.config/vivaldi/Default/Extensions/ajpgkpeckebdhofmmjfgcjjiiejpodla/1.0.33_0'

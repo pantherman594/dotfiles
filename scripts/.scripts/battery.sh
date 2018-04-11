@@ -15,10 +15,10 @@ do
         if [[ $percent -le 5 && $secondWarning == false ]]; then
             firstWarning=true
             secondWarning=true
-            zenity --warning --text "Battery Critical: $percent%, find a power source immediately" --no-wrap
+            notify-send -u critical "Battery Critical" "$percent%, find a power source immediately"
         elif [[ $percent -le 12 && $firstWarning == false ]]; then
             firstWarning=true
-            zenity --warning --text "Battery Low: $percent%, find a power source soon" --no-wrap
+            notify-send -u critical "Battery Low" "$percent%, find a power source soon"
         fi
     fi
     sleep 10

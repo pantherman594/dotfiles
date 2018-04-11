@@ -1,10 +1,6 @@
 #!/bin/bash
 
-ID=$(ps aux | grep WeatherDesk | grep .py | awk '( $11 == "python3" ){ print $2 }')
-
-if [[ $ID ]]
-then
-    kill $ID
-fi
-
-python3 ~/Documents/Programming/WeatherDesk/WeatherDesk.py -t 4
+cd /usr/share/backgrounds/pantherman594
+wget $(/home/pantherman594/.scripts/wallpaper.py) -O ./wallpaper.jpg
+wal -i ./wallpaper.jpg -c -n
+feh --bg-fill --no-xinerama ./wallpaper.jpg

@@ -291,7 +291,7 @@ label = %date%
 type = internal/date
 interval = 5
 
-time = %l:%M %p
+time = %H:%M
 
 label = %time%
 
