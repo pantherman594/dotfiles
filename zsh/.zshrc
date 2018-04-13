@@ -106,8 +106,6 @@ export EDITOR="$VISUAL"
 # Import colorscheme from 'wal'
 (cat /home/pantherman594/.cache/wal/sequences &)
 
-eval $(thefuck --alias)
-
 autoload -Uz compinit
 compinit
 

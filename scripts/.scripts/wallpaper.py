@@ -2,6 +2,7 @@
 import json
 from subprocess import Popen, PIPE
 
+out, err = Popen(['curl', '-s', 'https://api.reddit.com/r/earthporn+spaceporn/top?t=day&limit=100', '-A', 'linux:com.pantherman594.background:v0.1'], stdin=PIPE, stdout=PIPE, stderr=PIPE).communicate()
 data = json.loads(out)
 
 largestRatio = 0
