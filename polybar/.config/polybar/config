@@ -16,6 +16,7 @@ foreground = #ffffff
 foreground-alt = ${xrdb:color7}
 primary = ${xrdb:color0}
 alert = #ee6165
+include-file = /home/pantherman594/.cache/wal/poly
 
 [bar/base]
 width = 100%
@@ -25,8 +26,10 @@ height = 30
 radius = 0.0
 fixed-center = false
 
-background = ${colors.background}
+;background = ${colors.background}
+background = ${colors.barbg}
 foreground = ${colors.foreground}
+dim=value = 0.4
 
 line-size = 3
 line-color = #f00

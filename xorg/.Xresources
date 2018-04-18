@@ -12,4 +12,4 @@ URxvt.cursorBlink: true
 URxvt.saveLines: 2000
 
 
-*font: xft:hack:size=9
+*font: xft:iosevka:size=9
