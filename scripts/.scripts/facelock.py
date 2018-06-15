@@ -32,6 +32,9 @@ train_threshold = 0.075
 # threshold for testing picture similarity, if face is not found
 similarity_threshold = 170000000
 
+# id of i3lock
+lock_id = 0
+
 def calculateDistance(i1, i2):
     return numpy.sum((i1-i2)**2)
 
@@ -81,6 +84,24 @@ def load(image, name):
         os.remove(known_face_names.pop(highest_distance_face))
         num_known_faces -= 1
 
+def on_and_locked():
+    global lock_id
+
+    monitor_off = subprocess.run("xset q | grep -q 'Monitor is Off'", shell=True).returncode == 0
+    if monitor_off: return False
+
+    p = subprocess.Popen(["ps", "-A", "-o", "pid,etime,comm"], stdout=subprocess.PIPE)
+    out,err = p.communicate()
+    locked = False
+    for line in out.decode("utf-8").splitlines():
+        if 'i3lock' in line:
+            data = line.split(None, 3)
+            etime = data[1].split(':')
+            if len(etime) > 2 or int(etime[0]) > 0 or int(etime[1]) > 1:
+                lock_id = int(data[0])
+                return True
+
+    return False
 
 # Load all known faces if not in training mode
 if not should_train:
@@ -118,26 +139,32 @@ while True:
         print("Ready.")
         continue
 
-    # Only process every 30th frame of video to save time
+    # Only process every 10th frame of video to save time
     if frame_index == 0:
-        monitor_off = subprocess.run("xset q | grep -q 'Monitor is Off'", shell=True).returncode == 0
-
-        if monitor_off:
+        if not on_and_locked():
             video_capture.release()
-            while monitor_off:
+            while not on_and_locked():
                 time.sleep(1)
-                monitor_off = subprocess.run("xset q | grep -q 'Monitor is Off'", shell=True).returncode == 0
             video_capture = cv2.VideoCapture(0)
             continue
+
+        p = subprocess.Popen(["ps", "-A", "-o", "pid,etime,comm"], stdout=subprocess.PIPE)
+        out,err = p.communicate()
+        locked = False
+        for line in out.decode("utf-8").splitlines():
+            if 'i3lock' in line:
+                data = line.split(None, 3)
+                etime = data[1].split(':')
+                if len(etime) > 2 or int(etime[0]) > 0 or int(etime[1]) > 1:
+                    locked = True
+                    break
 
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgb_frame)
         face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
         match = False
-        face = False
-        for face_encoding in face_encodings:
-            face = True
+        for face_encoding in reversed(face_encodings): # Reverse direction so most recent (most similar) picture is checked first
             total_distance = 0
             # See if the face is a match for the known face(s)
             distances = face_recognition.face_distance(known_face_encodings, face_encoding)
@@ -156,28 +183,14 @@ while True:
                     last_known_appearance = rgb_frame
                 break
         
-        if (not face or no_match_count > 7) and not last_known_appearance is None:
-            distance += calculateDistance(rgb_frame, last_known_appearance)
-            print('s' + str((similarity_threshold - distance) / similarity_threshold))
-            if distance < similarity_threshold:
-                match = True
-
         if match:
             no_match_count = 0
-            if face:
-                p = subprocess.Popen(["ps", "-A", "-o", "pid,etime,comm"], stdout=subprocess.PIPE)
-                out,err = p.communicate()
-                for line in out.decode("utf-8").splitlines():
-                    if 'i3lock' in line:
-                        data = line.split(None, 3)
-                        etime = data[1].split(':')
-                        if len(etime) > 2 or int(etime[0]) > 0 or int(etime[1]) > 1:
-                            os.kill(int(data[0]), signal.SIGTERM)
+            os.kill(lock_id, signal.SIGTERM)
         else:
             no_match_count += 1
             print(no_match_count)
 
-    frame_index = (frame_index + 1) % 30
+    frame_index = (frame_index + 1) % 10
 
     if no_match_count == 10:
         subprocess.run(["bash", "../.scripts/lock_actual.sh"])

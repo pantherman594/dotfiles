@@ -21,18 +21,18 @@ xset dpms force off
 lock() {
     killall -SIGUSR1 dunst # Pause notifications
     i3lock \
-        -n -e -i $SCREEN --screen=0 --indicator \
-        --timepos="x+45:iy-87" --timestr="%H:%M"\
-        --datepos="tx+cw-327:ty" \
+        -n -e -i $SCREEN --screen=1 --indicator \
+        --timepos="x+45:iy+11" --timestr="%H:%M"\
+        --datepos="tx+w-327:ty" \
         --time-align=1 --date-align=1 --layout-align=1 \
         --clock --force-clock --datestr="" \
         --insidecolor=00000000 --ringcolor=ffffffff --line-uses-inside \
         --keyhlcolor=0066a6ff --bshlcolor=d23c3dff --separatorcolor=00000000 \
         --insidevercolor=f2cf4dff --insidewrongcolor=d23c3dff \
-        --timefont=Oxygen --datefont=Oxygen \
+        --time-font=Oxygen --date-font=Oxygen \
         --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+157:h+y-65" \
-        --radius=20 --textsize=1 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
-        --textcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff
+        --radius=20 --verifsize=1 --wrongsize=1 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
+        --verifcolor=ffffffff --wrongcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff
     killall -SIGUSR2 dunst # Resume notifications
 }
 lock &

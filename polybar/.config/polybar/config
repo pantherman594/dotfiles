@@ -9,11 +9,11 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = ${xrdb:color1}
-background-alt = ${xrdb:color4}
+background = ${xrdb:background}
+background-alt = ${xrdb:color2}
 ;foreground = ${xrdb:color7:#222}
-foreground = #ffffff
-foreground-alt = ${xrdb:color7}
+foreground = ${xrdb:foreground}
+foreground-alt = ${xrdb:color6}
 primary = ${xrdb:color0}
 alert = #ee6165
 include-file = /home/pantherman594/.cache/wal/poly
@@ -61,8 +61,8 @@ wm-restack = i3
 ;scroll-up = bspwm-desknext
 ;scroll-down = bspwm-deskprev
 
-scroll-up = i3wm-wsprev
-scroll-down = i3wm-wsnext
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
 
 i3-pin-workspaces = true
 
@@ -111,7 +111,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted =  %percentage_used%% %{F#999}(%used% / %total% used)
+label-mounted =  %percentage_used%% (%free% free)
 label-unmounted = 
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -238,10 +238,10 @@ format = <bar-used>
 
 bar-used-indicator =
 bar-used-width = 16
-bar-used-foreground-0 = ${colors.background-alt}
+bar-used-foreground-0 = ${colors.foreground-alt}
 bar-used-fill = ▐
 bar-used-empty = ▐
-bar-used-empty-foreground = ${colors.foreground-alt}
+bar-used-empty-foreground = ${colors.foreground}
 
 [module/wlan]
 type = internal/network
@@ -249,7 +249,7 @@ interface = wlo1
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-label-connected = %essid%
+label-connected = %essid% %local_ip%
 label-connected-foreground = ${colors.foreground-alt}
 
 format-disconnected =
@@ -358,7 +358,7 @@ format = <ramp>  <label>
 format-warn = <ramp>  <label-warn>
 
 label = %temperature%
-label-foreground = ${colors.foreground-alt}
+label-foreground = ${colors.foreground}
 label-warn = %temperature%
 label-warn-foreground = ${colors.alert}
 
