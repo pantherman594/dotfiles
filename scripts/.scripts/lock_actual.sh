@@ -18,6 +18,31 @@ ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -i ~/Pictures
 
 xset dpms force off
 
+move() {
+	run=true
+    time_end=$(( $(date +%s) + 60 ))
+	while $run; do
+		pkill -0 -f "\-\-title=$1"
+		successful=$?
+		if (( successful != 0 )); then
+			run=false
+		else
+			active_workspace=$( i3-msg -t get_workspaces | jq '.[] | select(.focused).name' )
+			i3-msg "[title=^${1}$] move window to workspace $active_workspace"
+			i3-msg "[title=^${1}$] floating enable" 
+			i3-msg "[title=^${1}$] sticky enable" 
+			i3-msg "[title=^${1}$] move position center" 
+            sleep 0.25
+		fi
+        time_now=$(date +%s)
+        if (( $time_now >= $time_end )); then
+            run=false
+            ~/.scripts/lock_actual.sh &
+            exit
+        fi
+	done
+}
+
 lock() {
     killall -SIGUSR1 dunst # Pause notifications
     i3lock \
@@ -34,6 +59,25 @@ lock() {
         --radius=20 --verifsize=1 --wrongsize=1 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
         --verifcolor=ffffffff --wrongcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff
     killall -SIGUSR2 dunst # Resume notifications
+
+    return
+	# Post-login dialog box
+	current=$BASHPID
+    pgrep "lock_actual.sh" | grep -v "^${current}$" | xargs kill -9
+
+	move Activities &
+	OUTPUT=$(zenity --forms --title="Activities" --text="Activities" --add-entry="What do you plan to do?")
+	accepted=$?
+	if [[ $accepted != 0 || $OUTPUT == "" || $OUTPUT == "break" ]]; then
+		move Break &
+		OUTPUT=$(zenity --forms --title="Break" --text="Break" --add-entry="How long of a break (minutes)?")
+		accepted=$?
+		if [[ $accepted != 0 ]] || [[ ! $OUTPUT =~ ^[0-9]{1,2}$ ]] || (( OUTPUT > 30 )); then
+			OUTPUT=0
+		fi
+		sleep $(( OUTPUT*60 ))
+		~/.scripts/lock_actual.sh &
+	fi
 }
 lock &
 

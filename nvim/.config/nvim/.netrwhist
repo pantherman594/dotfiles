@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/home/pantherman594/Documents/Programming/BibleAcronym/bibles/ESV'
 let g:netrw_dirhist_2='/home/pantherman594/Documents/Programming/BibleAcronym/bibles/NIV'
 let g:netrw_dirhist_3='/home/pantherman594/.config/vivaldi/Default/Storage'
@@ -8,3 +8,4 @@ let g:netrw_dirhist_5='/run/media/pantherman594/Seagate Backup Drive/Backups/And
 let g:netrw_dirhist_6='/run/media/pantherman594/Seagate Backup Drive/Backups/Android/twrp'
 let g:netrw_dirhist_7='/home/pantherman594/GOG Games/Stardew Valley/game'
 let g:netrw_dirhist_8='/home/pantherman594/Documents/Programming/trello-gcal-sync/node_modules'
+let g:netrw_dirhist_9='/etc/NetworkManager/system-connections'
