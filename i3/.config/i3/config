@@ -71,7 +71,9 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+exec --no-startup-id ~/.scripts/monitor.sh
 bindsym $mod+p exec --no-startup-id ~/.scripts/monitor_layout.sh
+bindsym XF86Display exec --no-startup-id ~/.scripts/monitor_layout.sh
 
 # change focus
 bindsym $mod+j focus left
@@ -201,6 +203,7 @@ assign [class="Thunar"] $w2
 assign [class="URxvt"] $w3
 
 assign [class="Code"] $w4
+assign [class="Atom"] $w4
 assign [class="Toolbox"] $w4
 assign [class="jetbrains-idea"] $w4
 assign [class="Processing"] $w4
@@ -254,6 +257,10 @@ client.placeholder      $bg         $bg         $fg   $ind      $bg
 
 new_window none
 
+for_window [class="^.*"] border pixel 0
+gaps inner 10
+smart_gaps on
+
 # Polybar
 exec_always ~/.scripts/polybar.sh # should be reloaded by WeatherDesk
 
@@ -282,12 +289,12 @@ bindsym $alt+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Sreen brightness controls
-bindsym Shift+XF86MonBrightnessUp exec xbacklight -inc 1 # increase screen brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym $alt+XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym Shift+XF86MonBrightnessDown exec xbacklight -dec 1 # decrease screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
-bindsym $alt+XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+bindsym Shift+XF86MonBrightnessUp exec xbacklight -inc 0.5 # increase screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 2 # increase screen brightness
+bindsym $alt+XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym Shift+XF86MonBrightnessDown exec xbacklight -dec 0.5 # decrease screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 2 # decrease screen brightness
+bindsym $alt+XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -298,9 +305,21 @@ bindsym XF86AudioPrev exec playerctl previous
 # Move workspace to other monitor
 bindsym $mod+Shift+greater move workspace to output right
 bindsym $mod+Shift+less move workspace to output left
+bindsym $mod+Shift+bracketright move workspace to output down
+bindsym $mod+Shift+bracketleft move workspace to output up
+
+# Rotate screen
+bindsym $mod+$alt+Up exec xrandr --output eDP1 --rotate normal 
+bindsym $mod+$alt+Left exec xrandr --output eDP1 --rotate left
+bindsym $mod+$alt+Right exec xrandr --output eDP1 --rotate right 
+bindsym $mod+$alt+Down exec xrandr --output eDP1 --rotate inverted
 
 # Screenshot
 bindsym $mod+Shift+s exec --no-startup-id ~/.scripts/screenshot.sh -s
+bindsym Print exec --no-startup-id ~/.scripts/screenshot.sh -s
+
+# Clear clipboard
+bindsym Control+Shift+v exec --no-startup-id xclip -o -sel clip | xclip -sel clip && sleep 0.1 && xdotool key Ctrl+v
 
 # Set wallpaper
 exec_always --no-startup-id ~/.scripts/wallpaper.sh
@@ -308,9 +327,15 @@ exec_always --no-startup-id ~/.scripts/wallpaper.sh
 # Set autolock after 2 min of inactivity
 exec xautolock -locker "~/.scripts/lock.sh" -time 2
 
-# Setup touchpad
-exec_always xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
-exec_always xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+# Setup trackpoint
+exec_always xinput set-prop "Elan TrackPoint" "libinput Accel Profile Enabled" 0 1
+exec_always xinput set-prop "Elan TrackPoint" "libinput Accel Speed" 0.5
+
+# Set display scaling
+exec_always xrandr --output eDP1 --scale 0.75x0.75
+
+# Start Pharos popup server
+exec --no-startup-id /usr/bin/pharospopup
 
 # Empty trash
 exec autotrash -d 30
@@ -321,10 +346,10 @@ exec i3-sensible-terminal
 #exec node ~/Documents/Programming/Trello/Trello.js
 exec megasync
 exec_always ~/.scripts/compton.sh
-exec ~/.scripts/facelock.py
 exec ~/.scripts/toggle_redshift.sh
 exec ~/.scripts/battery.sh
 exec --no-startup-id numpadx on
+exec --no-startup-id pharospopup
 # Update file index
 exec --no-startup-id find / -iname "*" 2>&1 | grep -v 'Permission denied\|Input/output error' > ~/.fileindex
 

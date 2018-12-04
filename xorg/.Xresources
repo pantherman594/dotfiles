@@ -10,6 +10,7 @@ Xft.rgba: rgb
 URxvt.scrollBar: false
 URxvt.cursorBlink: true
 URxvt.saveLines: 2000
+URxvt.transparent: true
+URxvt.shading:20
 
-
-*font: xft:iosevka:size=9
+*font: xft:iosevka:size=10

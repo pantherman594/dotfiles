@@ -11,10 +11,12 @@ for post in data['data']['children']:
     imageData = post['data']['preview']['images'][0]['source']
     if imageData['height'] < 700: continue
     ratio = imageData['width'] / imageData['height']
-    if ratio > 2.2: # ensure the image is widescreen
-        largestUrl = imageData['url']
+    if ratio > 2.2: # if the image is already the correct ratio, use it (this one will have the most upvotes)
+        #largestUrl = imageData['url']
+        largestUrl = post['data']['url']
         break
     if ratio > largestRatio:
         largestRatio = ratio
-        largestUrl = imageData['url']
+        #largestUrl = imageData['url']
+        largestUrl = post['data']['url']
 print(largestUrl)

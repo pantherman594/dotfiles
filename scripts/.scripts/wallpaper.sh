@@ -7,7 +7,7 @@ feh --bg-fill --no-xinerama ./wallpaper.jpg
 
 cd /home/pantherman594/.cache/wal
 color=$(head colors -n 2 | tail -n 1)
-color="#90${color:1}"
+color="#df${color:1}"
 echo '[colors]' > poly
 echo "barbg = ${color}" >> poly
 

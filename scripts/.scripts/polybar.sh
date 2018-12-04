@@ -15,6 +15,7 @@ do
     fi
 done
 
-# Launch bar1 and bar2
+# Launch bars
 polybar primary -q -r &
 polybar secondary -q -r &
+polybar tertiary  -q -r &
