@@ -79,6 +79,7 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_fixers = {
 \ '*': ['remove_trailing_lines', 'trim_whitespace'],
 \ 'javascript': ['eslint'],
+\ 'python': ['flake8'],
 \ 'latex': ['lacheck']
 \}
 
