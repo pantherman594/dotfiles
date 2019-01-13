@@ -32,9 +32,9 @@ except Exception:
     alpha = 0
     beta = 0
 
-backup_stack = []
-backup_stack.append('sync')
+backup_stack = []  # stack to reverse orders
 backup_stack.append('alpha')
+backup_stack.append('sync')  # sync before rotating alpha, to rotate the sync into alpha
 alpha += 1
 if alpha > 5:
     backup_stack.append('beta')
