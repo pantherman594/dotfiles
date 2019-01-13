@@ -1,8 +1,8 @@
 # If running trom tty1 start sway
-if [ $(tty) = "/dev/tty1" ]; then
-	sway
-	exit 0
-fi
+#if [ $(tty) = "/dev/tty1" ]; then
+	#sway
+	#exit 0
+#fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
