@@ -5,7 +5,8 @@ import time
 import os
 import subprocess
 
-LAST_BACKUP_FILE = '/home/pantherman594/.lastbackup'
+SNAPSHOTS_DIR = '/backups/.snapshots'
+LAST_BACKUP_FILE = '{}/.lastbackup'.format(SNAPSHOTS_DIR)
 
 
 def backup(level):
@@ -16,12 +17,20 @@ def backup(level):
     subprocess.call(['/usr/bin/rsnapshot', level])
 
 
+if os.geteuid() is not 0:
+    print("Please run as root.")
+    raise SystemExit()
+
 print("Waiting for snapshot root...")
-while not os.path.isdir('/backups/.snapshots'):
-    time.sleep(60)
+notification_hr = 23
+while not os.path.isdir(SNAPSHOTS_DIR):
     curr_time = datetime.now()
-    if curr_time.hour is 23 and curr_time.minute < 30:
+    if curr_time.hour == 23 and curr_time.minute < 30:
         raise SystemExit()
+    if curr_time.hour == notification_hr:
+        subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/501/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\'', shell=True)
+        notification_hr = (notification_hr + 1) % 24
+    time.sleep(60)
 
 print("Snapshot root found. Starting backup cycler...")
 try:

@@ -1,3 +1,4 @@
+export GPG_TTY=$(tty)
 # If running trom tty1 start sway
 #if [ $(tty) = "/dev/tty1" ]; then
 	#sway
@@ -115,8 +116,7 @@ autoload -Uz compinit
 compinit
 
 zstyle ':completion:*:trizen:*' command 'echo tab'
-neofetch
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh
 
 export CLASSPATH=$CLASSPATH:/usr/local/algs4/algs4.jar
 
@@ -125,3 +125,12 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/pantherman594/classroom/classroom-assistant/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/pantherman594/classroom/classroom-assistant/node_modules/tabtab/.completions/electron-forge.zsh
+
+neofetch
+
+# opam configuration
+test -r /home/pantherman594/.opam/opam-init/init.zsh && . /home/pantherman594/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
