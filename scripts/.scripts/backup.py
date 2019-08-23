@@ -22,10 +22,10 @@ if os.geteuid() is not 0:
     raise SystemExit()
 
 print("Waiting for snapshot root...")
-notification_hr = 23
+notification_hr = 21
 while not os.path.isdir(SNAPSHOTS_DIR):
     curr_time = datetime.now()
-    if curr_time.hour == 23 and curr_time.minute < 30:
+    if curr_time.hour == 21 and curr_time.minute < 30:
         raise SystemExit()
     if curr_time.hour == notification_hr:
         subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/501/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\'', shell=True)
