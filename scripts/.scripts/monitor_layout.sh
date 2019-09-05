@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DUAL_PRESET="xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1-1 --scale 1x1 --auto --pos 0x0"
+TRIPLE_PRESET="${DUAL_PRESET} && xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1-1 --scale 1x1 --auto --pos 0x0 --output DP1-2 --scale 1.2x1.2 --auto --pos 1920x432 --rotate left"
+
 XRANDR=$(which xrandr)
 
 MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
@@ -50,14 +53,14 @@ index+=1
 if [ $NUM_MONITORS -ge 3 ]
 then
     TILES[$index]="Triple (Preset)"
-    COMMANDS[$index]="xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1 --scale 1x1 --auto --pos 0x0 --output HDMI2 --scale 1.2x1.2 --auto --pos 1920x432 --rotate left"
+    COMMANDS[$index]=${TRIPLE_PRESET}
     index+=1
 fi
 
 if [ $NUM_MONITORS -ge 2 ]
 then
     TILES[$index]="Dual Vertical (Preset)"
-    COMMANDS[$index]="xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1 --scale 1x1 --auto --pos 0x0"
+    COMMANDS[$index]=${DUAL_PRESET}
     index+=1
 fi
 
@@ -128,7 +131,7 @@ SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup" -a 0 -no-custom  | awk '{pri
 
 # Call xrandr
 echo ${COMMANDS[$SEL]}
-$( ${COMMANDS[$SEL]} )
+bash -c "${COMMANDS[$SEL]}"
 
 NEW=$(xrandr)
 

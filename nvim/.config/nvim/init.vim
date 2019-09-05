@@ -38,6 +38,7 @@ let g:deoplete#enable_at_startup = 1
 
 " LaTeX
 Plug 'lervag/vimtex'
+let g:vimtex_compiler_latexmk = { 'continuous': 1 }
 
 call plug#end()
 filetype plugin indent on
@@ -59,6 +60,7 @@ map gb :ls<CR>:b<Space>
 map gn :bn<CR>
 map gp :bp<CR>
 map gd :bd<CR>
+map <M-a>l :ALELint<CR>
 
 " syntastic settings
 " set statusline +=%#warningmsg#
@@ -80,7 +82,8 @@ let g:ale_fixers = {
 \ '*': ['remove_trailing_lines', 'trim_whitespace'],
 \ 'javascript': ['eslint'],
 \ 'python': ['flake8'],
-\ 'latex': ['lacheck']
+\ 'latex': ['lacheck'],
+\ 'c': ['gcc']
 \}
 
 " airline settings
