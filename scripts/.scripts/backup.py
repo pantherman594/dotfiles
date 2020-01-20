@@ -17,7 +17,7 @@ def backup(level):
     subprocess.call(['/usr/bin/rsnapshot', level])
 
 
-if os.geteuid() is not 0:
+if os.geteuid() != 0:
     print("Please run as root.")
     raise SystemExit()
 

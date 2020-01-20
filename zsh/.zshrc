@@ -120,6 +120,8 @@ zstyle ':completion:*:trizen:*' command 'echo tab'
 
 export CLASSPATH=$CLASSPATH:/usr/local/algs4/algs4.jar
 
+export PATH=$PATH:/opt/bin
+
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools

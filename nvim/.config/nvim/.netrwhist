@@ -1,11 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/pantherman594/.config/compton'
-let g:netrw_dirhist_2='/home/pantherman594/.config'
-let g:netrw_dirhist_3='/home/pantherman594/.config/nvim'
-let g:netrw_dirhist_4='/home/pantherman594/.config'
-let g:netrw_dirhist_5='/home/pantherman594/.config/polybar'
-let g:netrw_dirhist_6='/home/pantherman594/.config'
-let g:netrw_dirhist_7='/home/pantherman594/.config/polybar'
-let g:netrw_dirhist_8='/home/pantherman594/.config'
-let g:netrw_dirhist_9='/home/pantherman594/.config/polybar'
+let g:netrw_dirhistcnt =1
+let g:netrw_dirhist_1='/data/Documents/FCC/FCCHome/Home/src/pages'

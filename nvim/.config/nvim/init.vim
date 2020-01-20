@@ -39,6 +39,11 @@ let g:deoplete#enable_at_startup = 1
 " LaTeX
 Plug 'lervag/vimtex'
 let g:vimtex_compiler_latexmk = { 'continuous': 1 }
+let g:vimtex_view_general_viewer = 'zathura'
+
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'natebosch/dart_language_server'
 
 call plug#end()
 filetype plugin indent on
@@ -83,7 +88,8 @@ let g:ale_fixers = {
 \ 'javascript': ['eslint'],
 \ 'python': ['flake8'],
 \ 'latex': ['lacheck'],
-\ 'c': ['gcc']
+\ 'c': ['gcc'],
+\ 'dart': ['ale_language_server']
 \}
 
 " airline settings
@@ -98,6 +104,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " enable syntax highlighting
 syntax enable
 
+set ic
 set encoding=utf-8
 " enabling hidden allows you to switch buffers without saving
 set hidden

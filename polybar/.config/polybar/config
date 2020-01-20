@@ -368,9 +368,7 @@ animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-5 = 
-animation-charging-6 = 
-animation-charging-7 = 
-animation-charging-framerate = 250
+animation-charging-framerate = 400
 
 [module/temperature]
 type = internal/temperature

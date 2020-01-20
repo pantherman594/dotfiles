@@ -2,6 +2,7 @@ include "%L"
 <Multi_key> <s> <h> : "¯\134_(ツ)_/¯"
 <Multi_key> <\> </> : "✓"
 <Multi_key> <-> <-> : "—"
+<Multi_key> <p> <m> : "±"
 
 <Multi_key> <g> <a> : "α"
 <Multi_key> <g> <b> : "β"

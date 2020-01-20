@@ -1,14 +1,11 @@
-/* ================== userChrome.js hack ======================= */
-@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-
-toolbarbutton#alltabs-button {
-  -moz-binding: url("userChrome.xml#js");
+/* ================== Bookmarks ======================= */
+#PlacesToolbarItems {
+  display: flex;
 }
 
-
-/* ================== Bookmarks ======================= */
 #PlacesToolbarItems > toolbarseparator {
   visibility: hidden !important;
+  flex: 1;
 }
 
 /* ================== Tree Style Tab ======================= */

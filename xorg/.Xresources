@@ -13,4 +13,4 @@ URxvt.saveLines: 2000
 URxvt.transparent: true
 URxvt.shading:20
 
-*font: xft:iosevka:size=10
+*font: xft:iosevka:size=11

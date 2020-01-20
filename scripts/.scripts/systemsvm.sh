@@ -12,6 +12,8 @@ fi
 newnum=$(expr ${oldnum} + 1)
 echo ${newnum} > ~/.systemsvm
 
+echo Waiting...
+sleep 3
 echo Connecting...
 ssh adminuser@192.168.56.102
 while [[ $? == 255 ]]; do
