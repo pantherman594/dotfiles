@@ -15,5 +15,5 @@ rofi.color-normal: #002f343f,#ddf3f4f5,#002f343f,#4400aae3,#ffffff
 rofi.color-active: #4400aae3,#ddf3f4f5,#4400aae3,#8800aae3,#ffffff
 rofi.font: iosevka 14
 rofi.matching: fuzzy
-rofi.modi: drun,find:~/Documents/Programming/Scripts/finder.sh,window
+rofi.modi: drun,find:~/.scripts/finder.sh,window
 rofi.drun-match-fields: name,generic,categories
