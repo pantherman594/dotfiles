@@ -75,14 +75,15 @@ monitor = eDP1
 
 modules-left = bspwm i3
 modules-center = date time
-modules-right = volume wlan eth ethc battery redshift caffine powermenu
+modules-right = volume wlan eth ethc etht battery redshift caffine powermenu
 
 i3-pin-workspaces = false
 
 [bar/secondary]
 inherit = bar/base
 
-monitor = DP1-1
+monitor = DP2-1
+monitor-fallback = VIRTUAL1
 
 modules-left = bspwm i3
 modules-center = filesystem memory cpu temperature
@@ -289,6 +290,20 @@ format-disconnected =
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/ethc]
+type = internal/network
+interface = enp0s20f0u4u4
+interval = 3.0
+
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/etht]
 type = internal/network
 interface = enp60s0u1u4
 interval = 3.0

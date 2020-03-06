@@ -1,7 +1,8 @@
 #!/bin/bash
 
-DUAL_PRESET="xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1-1 --scale 1x1 --auto --pos 0x0"
-TRIPLE_PRESET="${DUAL_PRESET} && xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP1-1 --scale 1x1 --auto --pos 0x0 --output DP1-2 --scale 1.2x1.2 --auto --pos 1920x432 --rotate left"
+SURFACE_PRESET="xrandr --output eDP1 --scale 1x1 --auto --pos 0x0 --output VIRTUAL1 --scale 0.5x0.5 --auto --pos 1920x0"
+DUAL_PRESET="xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP2-1 --scale 1x1 --auto --pos 0x0"
+TRIPLE_PRESET="${DUAL_PRESET} && xrandr --output eDP1 --scale 1x1 --auto --pos 0x1080 --output DP2-1 --scale 1x1 --auto --pos 0x0 --output DP2-2 --scale 1.2x1.2 --auto --pos 1920x432 --rotate left"
 
 XRANDR=$(which xrandr)
 
@@ -9,7 +10,6 @@ MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
 INACTIVE_MONITORS=( $( ${XRANDR} | awk '( $2 == "disconnected" ){ print $1 }' ) )
 DIMENS_X=( $( ${XRANDR} | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/x.\*// ) )
 DIMENS_Y=( $( ${XRANDR} | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/\+.\*// | sed s/.\*x// ) )
-
 
 NUM_MONITORS=${#MONITORS[@]}
 NUM_INACTIVE_MONITORS=${#INACTIVE_MONITORS[@]}
@@ -21,7 +21,7 @@ COMMANDS=()
 function gen_xrandr_only() {
     selected=$1
 
-    cmd="xrandr --output ${MONITORS[$selected]} --auto "
+    cmd="xrandr --output ${MONITORS[$selected]} --auto --scale 1x1 --pos 0x0"
 
     for entry in $(seq 0 $((${NUM_MONITORS}-1)))
     do
@@ -61,6 +61,10 @@ if [ $NUM_MONITORS -ge 2 ]
 then
     TILES[$index]="Dual Vertical (Preset)"
     COMMANDS[$index]=${DUAL_PRESET}
+    index+=1
+
+    TILES[$index]="Surface (Preset)"
+    COMMANDS[$index]=${SURFACE_PRESET}
     index+=1
 fi
 

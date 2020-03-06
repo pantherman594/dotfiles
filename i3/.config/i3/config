@@ -183,16 +183,16 @@ bindsym $mod+Shift+8 move container to workspace $w8
 bindsym $mod+Shift+9 move container to workspace $w9
 bindsym $mod+Shift+0 move container to workspace $w10
 
-bindsym $mod+Control+Shift+j workspace $w1
-bindsym $mod+Control+Shift+k workspace $w2
-bindsym $mod+Control+Shift+l workspace $w3
-bindsym $mod+Control+Shift+semicolon workspace $w4
-bindsym $mod+Control+Shift+u workspace $w5
-bindsym $mod+Control+Shift+i workspace $w6
-bindsym $mod+Control+Shift+o workspace $w7
-bindsym $mod+Control+Shift+p workspace $w8
-bindsym $mod+Control+Shift+n workspace $w9
-bindsym $mod+Control+Shift+m workspace $w10
+bindsym $mod+Control+Shift+j move container to workspace $w1
+bindsym $mod+Control+Shift+k move container to workspace $w2
+bindsym $mod+Control+Shift+l move container to workspace $w3
+bindsym $mod+Control+Shift+semicolon move container to workspace $w4
+bindsym $mod+Control+Shift+u move container to workspace $w5
+bindsym $mod+Control+Shift+i move container to workspace $w6
+bindsym $mod+Control+Shift+o move container to workspace $w7
+bindsym $mod+Control+Shift+p move container to workspace $w8
+bindsym $mod+Control+Shift+n move container to workspace $w9
+bindsym $mod+Control+Shift+m move container to workspace $w10
 
 # open random empty worksapce
 bindsym $mod+z exec --no-startup-id i3-msg "workspace 99$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 3 | head -n 1)"
