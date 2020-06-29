@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+  echo "This script must be run as root."
+  exit
+fi
+
+
+lines=$(cryptsetup status backups)
+
+function mount {
+  if [ "$(echo "$lines" | head -n1)" = "/dev/mapper/backups is inactive." ]; then
+    set -e
+    cryptsetup open /dev/disk/by-uuid/87fb29dc-cc5d-4367-954f-c74daf9af36d backups --key-file /opt/.keys/backups_luks2.bin
+    /usr/bin/mount /backups
+  else
+    echo "/backups is already mounted."
+  fi
+}
+
+function unmount {
+  if [ "$(echo "$lines" | head -n1)" != "/dev/mapper/backups is inactive." ]; then
+    device=$(echo "$lines" | grep device | tr -s ' ' | cut -d' ' -f3)
+    device=${device:0:-1}
+
+    set -e
+    umount /backups
+    cryptsetup close backups
+    set +e
+    umount ${device}{1,2}
+    set -e
+    udisksctl power-off -b $device
+  else
+    echo "/backups is not mounted."
+  fi
+}
+
+function usage {
+  echo "Usage: backups [mount|unmount|help]"
+}
+
+if [ "$1" != "" ]; then 
+  case $1 in
+    mount)
+      mount
+      ;;
+    unmount)
+      unmount
+      ;;
+    *)
+      usage
+      ;;
+  esac
+else
+  usage
+fi

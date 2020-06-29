@@ -1,13 +1,13 @@
 #!/bin/bash
 
-batBright=$(xbacklight -get)
+batBright=$(light -G)
 acBright=$batBright
 
 if [ -e ~/.brightness ]; then
     batBright=$(cat ~/.brightness | head -n1)
     acBright=$(cat ~/.brightness | tail -n1)
 
-    xbacklight -d :0 -set $batBright -time 250
+    light -S $batBright
 fi
 
 firstWarning=false
@@ -34,11 +34,11 @@ do
         fi
 
         if [[ $prev != 'Discharging' ]]; then
-            killall -q compton
-            acBright=$(xbacklight -get)
-            xbacklight -d :0 -set $batBright -time 250
+            # killall -q picom
+            acBright=$(light -G)
+            light -S $batBright
         else
-            batBright=$(xbacklight -get)
+            batBright=$(light -G)
         fi
     else 
         delay=10
@@ -46,14 +46,14 @@ do
         secondWarning=false
 
         if [[ $prev == 'Discharging' ]]; then
-            if ! pgrep -u $UID -x compton > /dev/null; then
-                ~/.scripts/compton.sh &
-            fi
+            # if ! pgrep -u $UID -x picom > /dev/null; then
+            #     ~/.scripts/picom.sh &
+            # fi
 
-            batBright=$(xbacklight -get)
-            xbacklight -d :0 -set $acBright -time 250
+            batBright=$(light -G)
+            light -S $acBright
         else
-            acBright=$(xbacklight -get)
+            acBright=$(light -G)
         fi
     fi
 

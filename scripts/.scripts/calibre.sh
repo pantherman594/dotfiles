@@ -61,6 +61,9 @@ select_format() {
     "pdf")
       xdg-open "$full_path"
       ;;
+    "djvu")
+      xdg-open "$full_path"
+      ;;
     *)
       ebook-viewer "$full_path"
       ;;
