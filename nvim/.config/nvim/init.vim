@@ -10,24 +10,28 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 
 " linting
-" Plug 'vim-syntastic/syntastic'
-" Plug 'w0rp/ale'
+Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
 
 " code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'zxqfl/tabnine-vim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_cmd = 'FZF'
 
 " airline
 Plug 'vim-airline/vim-airline'
@@ -52,6 +56,10 @@ Plug 'christoomey/vim-tmux-navigator'
 
 " goyo distraction free writing
 Plug 'junegunn/goyo.vim'
+
+" silver searcher
+Plug 'mileszs/ack.vim'
+let g:ackprg = 'rg --no-heading --color never --column'
 
 " indent lines
 Plug 'Yggdroot/indentLine'
@@ -90,11 +98,13 @@ set expandtab
 
 set number
 
+set smartcase
+
 " Map shift-tab to reverse tab
 inoremap <S-Tab> <C-d>
 
 " Map gb to list buffers
-map gb :ls<CR>:b<Space>
+map gb :CtrlPBuffer<CR>
 " map g[n, p, d] to go to next, previous, or delete buffer
 map gn :bn<CR>
 map gp :bp<CR>

@@ -1,0 +1,79 @@
+#! /bin/sh
+
+sxhkd &
+bspc config border_width         2
+bspc config window_gap          12
+
+bspc config split_ratio          0.5
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
+bspc config pointer_follows_monitor true
+
+# bspc rule -a Gimp desktop='^8' state=floating follow=on
+# bspc rule -a Chromium desktop='^2'
+# bspc rule -a mplayer2 state=floating
+# bspc rule -a Kupfer.py focus=on
+# bspc rule -a Screenkey manage=off
+
+bspc wm -o
+bspc wm -O DP-1-3-8 DP-1-1 eDP-1
+
+num_monitors=$(bspc query -M | wc -l)
+init=1
+for m in $(bspc query -D -d .active --names); do
+  if [ $m != "Desktop" ]; then
+    init=0
+    break
+  fi
+done
+
+if [ $init = 1 ]; then
+  # subscribe to bspwm events
+  ~/.scripts/bspwm_subscriptions.sh &
+
+  # setup initial monitor config
+  for (( i=1; i<=$num_monitors; i++ )); do
+    bspc monitor ^${i} -d $i
+    bspc desktop -f ^${i}:${i}
+  done
+
+  #
+  # run once
+  #
+
+  # set theme
+  xrdb ~/.Xresources
+
+  # set autolock after 5 min of inactivity
+  xautolock -locker "~/.scripts/lock.sh" -time 5 &
+
+  # start dock daemon
+  dockd --daemon &
+
+  # empty trash
+  autotrash -d 30 &
+
+  # start redshift and caffine
+  ~/.scripts/toggle_caffine.sh &
+
+  # start battery monitor
+  ~/.scripts/battery.sh &
+
+  nm-applet &
+
+  # update file cache
+  find / -type d \( -path ./backups -o -path ./windows \) -prune -o -iname "*" 2>&1 | grep -v 'Permission denied\|Input/output error' > ~/.fileindex &
+
+  xdotool key super+Return; sleep 3; xdotool type "~/.scripts/toggle_redshift.sh &"; xdotool key Return; sleep 1; xdotool key super+shift+q
+
+  bspc monitor DP-1-3-8 -f
+fi
+
+~/.scripts/wallpaper.sh
+xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999
+~/.scripts/polybar.sh
+~/.scripts/picom.sh &
+
+xinput set-prop "Elan TrackPoint" "libinput Accel Speed" 0.5

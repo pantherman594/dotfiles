@@ -18,11 +18,10 @@ then
         fi
     done
 else
-    redshift -l 42.34:-71.20 -t 6500:3200 &
+    redshift -l 42.34:-71.20 -t 6500:3200
     # title=rsbg$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
     # urxvt -title ${title} -e sh -c "redshift -l 42.34:-71.20 -t 6500:3200" &
     # sleep 0.25
-    # i3-msg "[title=${title}] move scratchpad"
-    # sleep 1
+    # bspc node newest -g hidden
 fi
 kill $(cat $RED_PID)

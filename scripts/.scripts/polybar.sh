@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Terminate already running bar instances
+# Terminate already running bar instances and their helper functions
 killall -q polybar
+ps axo pid,command | grep "/bin/bash /home/pantherman594/.config/polybar/" | head -n -1 | cut -d' ' -f2 | xargs kill
 
 i=1
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null
 do
+    # killall -q polybar
     sleep 1
     i=$(( i + 1 ))
     if [ $i -gt 10 ]
