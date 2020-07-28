@@ -109,6 +109,35 @@ bindkey -v
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+KEYTIMEOUT=5
+
+function zle-line-init zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# Use beam shape cursor for each new prompt.
+make_beam() {
+   echo -ne '\e[5 q'
+}
+
+# Do so now
+make_beam
+
+# And at the start of each prompt
+autoload -U add-zsh-hook
+add-zsh-hook preexec make_beam
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
@@ -120,7 +149,6 @@ export EDITOR="$VISUAL"
 autoload -Uz compinit
 compinit
 
-zstyle ':completion:*:trizen:*' command 'echo tab'
 #source /usr/share/nvm/init-nvm.sh
 
 export CLASSPATH=$CLASSPATH:/usr/local/algs4/algs4.jar
@@ -139,11 +167,9 @@ export OUT_DIR_COMMON_BASE=/backups/AndroidOut
 
 export SXHKD_SHELL=/bin/bash
 
-# tabtab source for electron-forge package
-# uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[[ -f /home/pantherman594/classroom/classroom-assistant/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/pantherman594/classroom/classroom-assistant/node_modules/tabtab/.completions/electron-forge.zsh
-
 neofetch
 
 # opam configuration
 test -r /home/pantherman594/.opam/opam-init/init.zsh && . /home/pantherman594/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+add-zsh-hook -d precmd prompt_grml_precmd
