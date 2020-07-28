@@ -43,6 +43,9 @@ Plug 'airblade/vim-gitgutter'
 " comments
 Plug 'tpope/vim-commentary'
 
+" Pug
+Plug 'digitaltoad/vim-pug'
+
 " Dart
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'

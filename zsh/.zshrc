@@ -67,9 +67,9 @@ DEFAULT_USER="pantherman594"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git pyhton ruby
-  sudo archlinux common-aliases
+  sudo common-aliases
   zsh-autosuggestions
+  history-substring-search
   zsh-syntax-highlighting # Must be last
 )
 
@@ -104,6 +104,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+bindkey -v
+
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
@@ -129,6 +134,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export VISIBLE=now
+
+export OUT_DIR_COMMON_BASE=/backups/AndroidOut
 
 export SXHKD_SHELL=/bin/bash
 

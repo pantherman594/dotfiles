@@ -165,5 +165,6 @@ NEW=$(xrandr)
 
 if [[ "$PREV" != "$NEW" ]]
 then
+    ~/.scripts/remove_inactive_monitors.sh
     bspc wm -r || i3-msg restart
 fi

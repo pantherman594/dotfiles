@@ -2,7 +2,7 @@
 
 # Terminate already running bar instances and their helper functions
 killall -q polybar
-ps axo pid,command | grep "/bin/bash /home/pantherman594/.config/polybar/" | head -n -1 | cut -d' ' -f2 | xargs kill
+ps axo pid,command | grep "/bin/bash /home/pantherman594/.config/polybar/" | head -n -1 | sed 's/^ *\([0-9]*\).*$/\1/g' | xargs kill
 
 i=1
 # Wait until the processes have been shut down

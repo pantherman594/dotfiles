@@ -1,4 +1,12 @@
 #
+# key remappings
+#
+#
+
+shift + Escape
+  xte "keyup Escape" "keydown grave" "keyup grave"
+
+#
 # wm independent hotkeys
 #
 
@@ -8,7 +16,7 @@ super + shift + x
 
 # terminal emulator
 super + Return
-	urxvt
+	urxvt -si -sw -sk
 
 # program launcher
 super + d
@@ -113,7 +121,7 @@ super + {h,j,k,l}{_, + shift}
   f() \{ bspc node -f $d || bspc monitor -f $d; \}; \
   s() \{ bspc node -s $d --follow || bspc node -m $d --follow; \}; \
   {f,s}
-super + {_,shift + }{Left,Down,Up,Right}
+super + {Left,Down,Up,Right}{_, + shift}
   d="{west,south,north,east}"; \
   f() \{ bspc node -f $d || bspc monitor -f $d; \}; \
   s() \{ bspc node -s $d --follow || bspc node -m $d --follow; \}; \
@@ -201,7 +209,8 @@ super + ctrl + shift + {h,j,k,l}
   mon=$(bspc query -M -m); \
   bspc query -D -d last.local || bspc monitor -a 11; \
   bspc desktop $desk -m {west,south,north,east} --follow; \
-  bspc desktop $desk -f
+  bspc desktop $desk -f; \
+  ~/.scripts/sort_desktops.sh
 
 super + ctrl + c
   bspc query -N -n > /tmp/bspwmdtop_swap
