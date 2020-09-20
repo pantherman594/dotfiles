@@ -1,23 +1,13 @@
 #!/bin/bash
 
 PRIMARY="--output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
-# SECONDARY="--output DP-2-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto"
-# SECONDARY="--output HDMI-2 --mode 1920x1080 --scale 0.9999x0.9999 --auto"
-SECONDARY="--output DP-1-3-8 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal"
-# TERTIARY="--output DP-2-2 --scale 1.2x1.2 --auto --rotate left"
-# TERTIARY="--output DP-1 --scale 1.2x1.2 --auto --rotate left"
-TERTIARY="--output DP-1-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
-QUATERNARY="--output DP-1-2 --mode 1440x900 --scale 1.2x1.2 --auto --rotate left"
+SECONDARY="--output DP-1-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
+TERTIARY="--output DP-1-3 --mode 1440x900 --scale 1.2x1.2 --auto --rotate left"
 
 # SURFACE_PRESET="xrandr --newmode \"2736x1824\"  426.00  2736 2952 3248 3760  1824 1827 1837 1890 -hsync +vsync && xrandr --addmode VIRTUAL1 2736x1824 && xrandr --output eDP1 --scale 1x1 --auto --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
 SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
-# DUAL_PRESET="xrandr ${EDP1} --pos 0x1080 --output DP2-1 --scale 1x1 --auto --pos 0x0"
-DUAL_PRESET="xrandr ${PRIMARY} --pos 0x1080 ${SECONDARY} --pos 0x0"
-#TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x1080 ${SECONDARY} --pos 0x0 ${TERTIARY} --pos 1920x432"
-TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x1440 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 0x360"
-QUAD_PRESET="xrandr ${PRIMARY} --pos 1920x1080 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 0x0 ${QUATERNARY} --pos 3840x432"
-#QUAD_PRESET="xrandr ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 0x180 ${QUATERNARY} --pos 4480x0"
-QUAD_PRESET="xrandr ${PRIMARY} --pos 1920x1440 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 0x180" # ${QUATERNARY} --pos 4480x0"
+DUAL_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0"
+TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 3840x0"
 
 XRANDR=$(which xrandr)
 
@@ -65,13 +55,6 @@ TILES[$index]="GUI (arandr)"
 COMMANDS[$index]="arandr"
 index+=1
 
-if [ $NUM_MONITORS -ge 4 ]
-then
-    TILES[$index]="Quad (Preset)"
-    COMMANDS[$index]=${QUAD_PRESET}
-    index+=1
-fi
-
 if [ $NUM_MONITORS -ge 3 ]
 then
     TILES[$index]="Triple (Preset)"
@@ -81,7 +64,7 @@ fi
 
 if [ $NUM_MONITORS -ge 2 ]
 then
-    TILES[$index]="Dual Vertical (Preset)"
+    TILES[$index]="Dual (Preset)"
     COMMANDS[$index]=${DUAL_PRESET}
     index+=1
 fi

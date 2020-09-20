@@ -24,4 +24,4 @@ else
     # sleep 0.25
     # bspc node newest -g hidden
 fi
-kill $(cat $RED_PID)
+kill "$(cat $RED_PID)"

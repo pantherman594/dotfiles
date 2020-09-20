@@ -1,12 +1,4 @@
 #
-# key remappings
-#
-#
-
-shift + Escape
-  xte "keyup Escape" "keydown grave" "keyup grave"
-
-#
 # wm independent hotkeys
 #
 
@@ -130,6 +122,10 @@ super + {Left,Down,Up,Right}{_, + shift}
 # focus the node for the given path jump
 super + ctrl + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
+
+# rotate leaves of the tree
+super + {period,comma}
+	bspc node @parent -R {90,270}
 
 # focus the next/previous node in the current desktop
 super + {_,shift + }c

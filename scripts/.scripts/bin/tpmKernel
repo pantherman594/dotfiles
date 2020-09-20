@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 function preboot {
 
@@ -15,7 +15,7 @@ function preboot {
 
   echo "Preboot setup complete."
   echo "Please reboot and run the postboot script."
-  read -p "Reboot now? [Y/n] " yn
+  read -rp "Reboot now? [Y/n] " yn
   if [[ ! $yn =~ ^[Nn]$ ]]
   then
     reboot now

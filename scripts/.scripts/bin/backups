@@ -27,9 +27,9 @@ function unmount {
     umount /backups
     cryptsetup close backups
     set +e
-    umount ${device}{1,2}
+    umount "${device}"{1,2}
     set -e
-    udisksctl power-off -b $device
+    udisksctl power-off -b "$device"
   else
     echo "/backups is not mounted."
   fi
