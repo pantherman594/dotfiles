@@ -10,8 +10,8 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 
 " linting
-Plug 'vim-syntastic/syntastic'
-Plug 'w0rp/ale'
+" Plug 'vim-syntastic/syntastic'
+" Plug 'w0rp/ale'
 
 " code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -19,11 +19,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
@@ -50,6 +48,9 @@ Plug 'digitaltoad/vim-pug'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 Plug 'natebosch/dart_language_server'
+
+" Syntax Highlighting
+Plug 'sheerun/vim-polyglot'
 
 " codi side pane
 Plug 'metakirby5/codi.vim'
@@ -80,6 +81,9 @@ Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'ianks/vim-tsx', { 'for': 'typescript.tsx' }
 
+" c sharp
+Plug 'OrangeT/vim-csharp'
+
 " completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'Shougo/denite.nvim'
@@ -99,7 +103,12 @@ set shiftwidth=2
 " On pressing tab, insert 2 spaces
 set expandtab
 
-set number
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
+augroup END
 
 set smartcase
 
@@ -113,31 +122,6 @@ map gn :bn<CR>
 map gp :bp<CR>
 map gd :bd<CR>
 " map <M-a>l :ALELint<CR>
-
-" syntastic settings
-" set statusline +=%#warningmsg#
-" set statusline +=%{SyntasticStatuslineFlag()}
-" set statusline +=%*
-" 
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" 
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-
-" ale settings
-" let g:ale_lint_on_text_changed = 'never'
-" let g:airline#extensions#ale#enabled = 1
-" let g:ale_fixers = {
-" \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \ 'javascript': ['eslint'],
-" \ 'python': ['flake8'],
-" \ 'latex': ['lacheck'],
-" \ 'c': ['gcc'],
-" \ 'dart': ['ale_language_server']
-" \}
 
 " airline settings
 let g:airline#extensions#tabline#enabled = 1

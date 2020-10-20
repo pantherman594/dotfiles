@@ -1,0 +1,85 @@
+xkb_keymap {
+xkb_keycodes { include "evdev+aliases(qwerty)" };
+
+xkb_types "cust_caps_types" {
+    include "complete"
+    type "CUST_CAPSLOCK" {
+        modifiers= Shift+Lock; 
+        map[Shift] = Level2;            //maps shift and no Lock. Shift+Alt goes here, too, because Alt isn't in modifiers.
+        map[Lock] = Level3;
+        map[Shift+Lock] = Level3;       //maps shift and Lock. Shift+Lock+Alt goes here, too.
+        level_name[Level1]= "Base";
+        level_name[Level2]= "Shift";
+        level_name[Level3]= "Lock";
+    };
+};
+
+xkb_compatibility "cust_caps_compatibility" {
+    include "complete"
+
+    override interpret Caps_Lock+AnyOfOrNone(all) {
+        action= SetMods(modifiers=Lock);
+    };
+};
+
+xkb_symbols "cust_caps_symbols" {
+    include "pc+us+inet(evdev)"
+
+    name[group1]="Custom Caps Lock Keys";
+
+    override key  <ESC> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [          Escape,      asciitilde,           grave ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<TLDE>, clearmods=Lock) ]
+    };
+    override key <BKSP> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [       BackSpace,       BackSpace,          Delete ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<DELE>, clearmods=Lock) ]
+    };
+    override key <AD02> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               w,               W,           Prior ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<PGUP>, clearmods=Lock) ]
+    };
+    override key <AC01> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               a,               A,            Home ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<HOME>, clearmods=Lock) ]
+    };
+    override key <AC02> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               s,               S,            Next ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<PGDN>, clearmods=Lock) ]
+    };
+    override key <AC03> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               d,               D,             End ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<END>, clearmods=Lock) ]
+    };
+    override key <AC06> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               h,               H,            Left ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<LEFT>, clearmods=Lock) ]
+    };
+    override key <AC07> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               j,               J,            Down ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<DOWN>, clearmods=Lock) ]
+    };
+    override key <AC08> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               k,               K,              Up ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<UP>, clearmods=Lock) ]
+    };
+    override key <AC09> {
+        type= "CUST_CAPSLOCK",
+        symbols[Group1]= [               l,               L,           Right ],
+        actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<RGHT>, clearmods=Lock) ]
+    };
+    override key <I255> {         [      XF86RFKill,       Multi_key ] };
+};
+
+xkb_geometry { include "pc(pc105)" };
+
+};

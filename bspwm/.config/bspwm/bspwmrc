@@ -76,8 +76,13 @@ xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999
 ~/.scripts/polybar.sh
 ~/.scripts/picom.sh &
 
+# Set up custom keyboard mappings
+test -f ~/.Xkeymap && xkbcomp ~/.Xkeymap $DISPLAY
+# xcape -e 'Mode_switch=Multi_key'
+xcape -e 'Caps_Lock=Multi_key'
+
+# Trackpad tweaks
 xinput set-prop "Elan TrackPoint" "libinput Accel Speed" 0.5
 xmodmap ~/.Xmodmap
-xcape -e 'Mode_switch=Multi_key'
 
 sxhkd &

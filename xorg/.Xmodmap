@@ -1,17 +1,30 @@
-! Map shift + escape to tilde
-keycode 9 = Escape asciitilde
+! Commented keyboard mappings are now done with an xkb configuration
 
-! Set 255 (not mapped to anything) to Multi_key so xcape works later
-keycode 255 = Multi_key
-
-! Use caps lock with hjkl to control arrow keys
-clear lock
-keycode 66 = Mode_switch
-keycode 43 = h H Left Left
-keycode 44 = j J Down Down
-keycode 45 = k K Up Up
-keycode 46 = l L Right Right
-
-add mod5 = Mode_switch
+! ! Map shift + escape to tilde
+! keycode 9 = Escape asciitilde
+! 
+! ! Set 255 (not mapped to anything) to Multi_key so xcape works later
+! keycode 255 = Multi_key
+! 
+! ! Use caps lock as mode switch
+! clear lock
+! keycode 66 = Mode_switch
+! 
+! ! Caps + HJKL for arrow keys
+! keycode 43 = h H Left Left
+! keycode 44 = j J Down Down
+! keycode 45 = k K Up Up
+! keycode 46 = l L Right Right
+! 
+! ! Caps + WASD for Home PgUp PgDown End
+! keycode 38 = a A Home Home
+! keycode 39 = s S Next Next
+! keycode 25 = w W Prior Prior
+! keycode 40 = d D End End
+! 
+! ! Caps + Backspace for Delete
+! keycode 22 = BackSpace BackSpace Delete Delete
+! 
+! add mod5 = Mode_switch
 
 pointer = 1 2 3 4 5 6 7 8 9 10 11 12

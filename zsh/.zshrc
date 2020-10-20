@@ -179,6 +179,8 @@ export VISIBLE=now
 
 export OUT_DIR_COMMON_BASE=/backups/AndroidOut
 
+export FrameworkPathOverride=~/.config/coc/extensions/coc-omnisharp-data/server/omnisharp
+
 export SXHKD_SHELL=/bin/bash
 
 neofetch

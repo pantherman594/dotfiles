@@ -1,6 +1,6 @@
 #!/bin/bash
 
-active_monitors=($(bspc query -M --names))
+active_monitors=($(bspc query -M --names | sort | uniq))
 connected=($(xrandr | grep -E "[^s]connected\s+(primary)?\s+[0-9]" | cut -d' ' -f1))
 
 to_remove=($(echo ${active_monitors[@]} ${connected[@]} ${connected[@]} | tr ' ' '\n' | sort | uniq -u))
