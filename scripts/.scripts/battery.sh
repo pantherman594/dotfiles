@@ -27,10 +27,10 @@ do
         if [[ $percent -le 5 && $secondWarning == false ]]; then
             firstWarning=true
             secondWarning=true
-            notify-send -u critical "Battery Critical" "$percent%, find a power source immediately"
-        elif [[ $percent -le 12 && $firstWarning == false ]]; then
+            notify-send -u critical "Battery Critical" "$percent%, find a power source immediately" -t 300000
+        elif [[ $percent -le 15 && $firstWarning == false ]]; then
             firstWarning=true
-            notify-send -u critical "Battery Low" "$percent%, find a power source soon"
+            notify-send -u critical "Battery Low" "$percent%, find a power source soon" -t 60000
         fi
 
         if [[ $prev != 'Discharging' ]]; then

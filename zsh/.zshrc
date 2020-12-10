@@ -163,7 +163,7 @@ export EDITOR="$VISUAL"
 autoload -Uz compinit
 compinit
 
-#source /usr/share/nvm/init-nvm.sh
+source /usr/share/nvm/init-nvm.sh
 
 export CLASSPATH=$CLASSPATH:/usr/local/algs4/algs4.jar
 

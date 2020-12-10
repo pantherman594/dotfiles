@@ -4,7 +4,7 @@
 ! keycode 9 = Escape asciitilde
 ! 
 ! ! Set 255 (not mapped to anything) to Multi_key so xcape works later
-! keycode 255 = Multi_key
+keycode 255 = Multi_key
 ! 
 ! ! Use caps lock as mode switch
 ! clear lock

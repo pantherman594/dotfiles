@@ -28,7 +28,7 @@ while not os.path.isdir(SNAPSHOTS_DIR):
     if curr_time.hour == 21 and curr_time.minute < 30:
         raise SystemExit()
     if curr_time.hour == notification_hr:
-        subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/501/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\'', shell=True)
+        subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/501/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\' -t 60000', shell=True)
         notification_hr = (notification_hr + 1) % 24
     time.sleep(60)
 
@@ -59,4 +59,5 @@ while len(backup_stack) > 0:
 with open(LAST_BACKUP_FILE, 'w') as f:
     f.write('{}\n{}'.format(alpha, beta))
 
+subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/501/bus notify-send \'backup.py\' \'Backups complete.\' -t 60000', shell=True)
 print("Backups complete.")

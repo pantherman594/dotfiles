@@ -77,7 +77,7 @@ xkb_symbols "cust_caps_symbols" {
         symbols[Group1]= [               l,               L,           Right ],
         actions[Group1]= [      NoAction(),      NoAction(),   RedirectKey(keycode=<RGHT>, clearmods=Lock) ]
     };
-    override key <I255> {         [      XF86RFKill,       Multi_key ] };
+    override key <I255> {         [       Multi_Key ] };
 };
 
 xkb_geometry { include "pc(pc105)" };
