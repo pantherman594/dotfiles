@@ -1,2 +1,4 @@
 close_on_unfocus = 1
-mainwindow_yoffset = 30
+mainwindow_yoffset = 45
+mainwindow_xoffset = -65
+mainwindow_skip_taskbar = 1

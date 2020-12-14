@@ -1,5 +1,7 @@
-#!/bin/bash
-icon=
+#!/usr/bin/env bash
+icon=
+pad_active="%{B#E57C46} %{B#E57C46} %{B#E57C46}"
+pad_inactive="%{B#C4C7C5} %{B#C4C7C5} %{B#C4C7C5}"
 last=""
 show() {
     if [[ $last != $1 ]]
@@ -13,9 +15,9 @@ while true
 do
     if pgrep -x "redshift" > /dev/null
     then
-        show "%{F#EE6165}$icon"
+        show "$pad_active$icon$pad_active"
     else
-        show "%{F#FFFFFF}$icon"
+        show "$pad_inactive$icon$pad_inactive"
     fi
     sleep 30 &
     echo ${!} > ~/.config/polybar/redshift.pid

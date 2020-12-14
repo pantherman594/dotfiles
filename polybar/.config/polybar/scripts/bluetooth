@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+icon=
+pad_active="%{B#6D8895} %{B#6D8895} %{B#6D8895}"
+pad_inactive="%{B#C4C7C5} %{B#C4C7C5} %{B#C4C7C5}"
+last=""
+show() {
+    if [[ $last != $1 ]]
+    then
+        echo $1
+        last=$1
+    fi
+}
+
+while true
+do
+    if [[ $(rfkill list bluetooth -r | head -n2 | tail -n1 | cut -d' ' -f3) == "no" ]]
+    then
+        show "$pad_active$icon$pad_active"
+    else
+        show "$pad_inactive$icon$pad_inactive"
+    fi
+    sleep 30 &
+    echo ${!} > ~/.config/polybar/bluetooth.pid
+    wait ${!} 2>/dev/null
+done

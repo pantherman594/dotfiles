@@ -16,8 +16,6 @@ SIZE=$(xrandr | awk '($7 == "current" ){print $8"x"$10}' | sed s/,// )
 ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -i ~/Pictures/overlay.png -filter_complex "[0:v]boxblur=5[base],[1:v]scale=180:80[ovrl],[base][ovrl]overlay=25:main_h-overlay_h-25" -vframes 1 $SCREEN
 #convert $SCREEN -draw "fill black fill-opacity 0.5 $rectangle" $SCREEN
 
-xset dpms force off
-
 move() {
 	run=true
     time_end=$(( $(date +%s) + 60 ))
@@ -83,3 +81,5 @@ lock &
 
 sleep 1
 rm $SCREEN
+
+xset dpms force off
