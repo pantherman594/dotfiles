@@ -24,6 +24,7 @@ Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-flutter', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'zxqfl/tabnine-vim'
@@ -118,10 +119,10 @@ inoremap <S-Tab> <C-d>
 
 " Map gb to list buffers
 map gb :CtrlPBuffer<CR>
-" map g[n, p, d] to go to next, previous, or delete buffer
+" map g[n, p, c] to go to next, previous, or delete buffer
 map gn :bn<CR>
 map gp :bp<CR>
-map gd :bd<CR>
+map gc :bd<CR>
 " map <M-a>l :ALELint<CR>
 
 " airline settings

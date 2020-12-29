@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/data/Documents/acf-among-us/server/src'
 let g:netrw_dirhist_3='/data/Documents/rSpace/rcomponents/src/lib/GenericComponent'
 let g:netrw_dirhist_2='/data/Documents/FCC/FCCGit/FrontEnd/src/actions'
 let g:netrw_dirhist_1='/data/Documents/FCC/FCCHome/Home/src/pages'
