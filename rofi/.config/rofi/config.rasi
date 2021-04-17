@@ -11,6 +11,8 @@ configuration {
 	sidebar-mode: true;
 	eh: 1;
 	matching: "fuzzy";
+	sort: true;
+	sorting-method: "fzf";
 	line-margin: 5;
 	line-padding: 10;
 	separator-style: "none";

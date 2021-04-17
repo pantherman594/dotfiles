@@ -56,8 +56,8 @@ do
             echo Password copied.
             ;;
         $connVPN)
-            bw_get password
-            nmcli con up "Eagle VPN" --ask
+            # bw_get password
+            nmcli con up "Eagle VPN" # --ask
             ;;
         $discVPN)
             nmcli con down "Eagle VPN"

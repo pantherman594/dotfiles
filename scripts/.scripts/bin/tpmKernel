@@ -1,5 +1,10 @@
 #!/bin/bash
 
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+source "$LIBRARY"/util/message.sh
+
+colorize
+
 function preboot {
 
   # Combine initrds
@@ -13,13 +18,9 @@ function preboot {
     --add-section .initrd="/boot/unified-ucode-initramfs.img" --change-section-vma .initrd=0x3000000 \
     "/usr/lib/systemd/boot/efi/linuxx64.efi.stub" "/boot/EFI/Linux/Linux.efi"
 
-  echo "Preboot setup complete."
-  echo "Please reboot and run the postboot script."
-  read -rp "Reboot now? [Y/n] " yn
-  if [[ ! $yn =~ ^[Nn]$ ]]
-  then
-    reboot now
-  fi
+  msg "Preboot setup complete."
+  msg "Please reboot to complete the postboot script."
+  touch ~/.tpm_postboot
 }
 
 function postboot {
@@ -43,13 +44,20 @@ function postboot {
   rm load.context obj.priv obj.pub policy.digest primary.context
 }
 
+function postbootif {
+  if [ -f ~/.tpm_postboot ]; then
+    postboot
+    rm ~/.tpm_postboot
+  fi
+}
+
 function usage {
-  echo "Usage: tpmKernel [preboot|postboot|help]"
+  msg "Usage: tpmKernel [preboot|postboot|help]"
 }
 
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-  echo "This script must be run as root."
-  exit
+  error "This script must be run as root."
+  exit 1
 fi
 
 if [ "$1" != "" ]; then 
@@ -59,6 +67,9 @@ if [ "$1" != "" ]; then
       ;;
     postboot)
       postboot
+      ;;
+    postbootif)
+      postbootif
       ;;
     *)
       usage

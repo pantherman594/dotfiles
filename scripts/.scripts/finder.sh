@@ -28,7 +28,7 @@ then
     then
         echo "$(head -n ${ROFI_FIND_HISTORY_MAXCOUNT} ${ROFI_FIND_HISTORY_FILE})" > ${ROFI_FIND_HISTORY_FILE}
     fi
-    awk -v IGNORECASE=1 "/${QUERY:1}/" ~/.fileindex
+    plocate -i -l 1000 ${QUERY:1}
   elif [[ "$QUERY" == /* ]]
   then
     if [[ "$QUERY" == *\?\? ]]
@@ -42,7 +42,7 @@ then
       exit;
     fi
   else
-    cat ~/.fileindex
+    return
   fi
 else
   echo Clear

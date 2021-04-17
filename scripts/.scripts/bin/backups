@@ -11,7 +11,7 @@ lines=$(cryptsetup status backups)
 function mount {
   if [ "$(echo "$lines" | head -n1)" = "/dev/mapper/backups is inactive." ]; then
     set -e
-    cryptsetup open /dev/disk/by-uuid/87fb29dc-cc5d-4367-954f-c74daf9af36d backups --key-file /opt/.keys/backups_luks2.bin
+    cryptsetup open /dev/disk/by-uuid/266f7698-4ec9-4c63-bcd1-5dd0a6b32cc2 backups --key-file /opt/.keys/backups_luks2.bin
     /usr/bin/mount /backups
   else
     echo "/backups is already mounted."
@@ -20,16 +20,20 @@ function mount {
 
 function unmount {
   if [ "$(echo "$lines" | head -n1)" != "/dev/mapper/backups is inactive." ]; then
-    device=$(echo "$lines" | grep device | tr -s ' ' | cut -d' ' -f3)
-    device=${device:0:-1}
+    if [ -f /backups/backup.lock ]; then
+      echo "ERROR: Cannot unmount, backup is still in progress."
+    else
+      device=$(echo "$lines" | grep device | tr -s ' ' | cut -d' ' -f3)
+      device=${device:0:-1}
 
-    set -e
-    umount /backups
-    cryptsetup close backups
-    set +e
-    umount "${device}"{1,2}
-    set -e
-    udisksctl power-off -b "$device"
+      set -e
+      umount /backups
+      cryptsetup close backups
+      set +e
+      umount "${device}"{1,2}
+      set -e
+      udisksctl power-off -b "$device"
+    fi
   else
     echo "/backups is not mounted."
   fi

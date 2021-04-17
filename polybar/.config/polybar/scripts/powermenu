@@ -2,11 +2,12 @@
 
 ## Created By Aditya Shakya
 
-MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 40 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "> Lock|> Logout|> Suspend|> Reboot|> Shutdown")"
+MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 40 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 6 <<< "> Lock|> Logout|> Suspend|> Reboot|> Windows|> Shutdown")"
             case "$MENU" in
                 *Lock) ~/.scripts/lock_actual.sh ;;
                 *Logout) bspc quit  ;;
-								*Suspend) ~/.scripts/lock_actual.sh && systemctl susped ;;
+								*Suspend) ~/.scripts/lock_actual.sh && systemctl suspend ;;
                 *Reboot) systemctl reboot ;;
+                *Windows) sudo /home/pantherman594/bin/refind_next_boot windows && systemctl reboot ;;
                 *Shutdown) systemctl -i poweroff
             esac

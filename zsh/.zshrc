@@ -8,7 +8,7 @@ export GPG_TTY=$(tty)
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/pantherman594/.oh-my-zsh
+export ZSH=/home/pantherman594/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -52,7 +52,7 @@ DEFAULT_USER="pantherman594"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -70,12 +70,19 @@ plugins=(
   sudo common-aliases
   zsh-autosuggestions
   history-substring-search
+  timer
   zsh-syntax-highlighting # Must be last
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+TIMER_PRECISION=2
+TIMER_THRESHOLD=5
+
+# allow use of !! without multiple enters
+unsetopt hist_verify
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -108,6 +115,7 @@ bindkey -v
 
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+bindkey "^R" history-incremental-pattern-search-backward
 
 KEYTIMEOUT=5
 
@@ -158,14 +166,12 @@ export EDITOR="$VISUAL"
 . ~/.bash_aliases
 
 # Import colorscheme from 'wal'
-(cat /home/pantherman594/.cache/wal/sequences &)
+# (cat /home/pantherman594/.cache/wal/sequences &)
 
 autoload -Uz compinit
 compinit
 
 source /usr/share/nvm/init-nvm.sh
-
-export CLASSPATH=$CLASSPATH:/usr/local/algs4/algs4.jar
 
 export PATH=$PATH:/opt/bin
 export PATH=$PATH:~/bin
@@ -177,13 +183,41 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export VISIBLE=now
 
-export OUT_DIR_COMMON_BASE=/backups/AndroidOut
-
 export FrameworkPathOverride=~/.config/coc/extensions/coc-omnisharp-data/server/omnisharp
 
 export CHROME_EXECUTABLE=/usr/bin/chromium
 
 export SXHKD_SHELL=/bin/bash
+
+export CTRL_HOST=tt.dav.sh
+export CTRL_PORT=443
+
+jcd() {
+  jc() {
+    if [ -z $1 ]; then
+      exit 0
+    fi
+    a=${1:0:1}
+    a=${a}0-${a}9
+
+    if [ ! -z $3 ]; then
+      cd /data/${a}*/${1}*/${1}.${2}*/${1}.${2}_${3}*
+    elif [ ! -z $2 ]; then
+      cd /data/${a}*/${1}*/${1}.${2}*
+    else
+      cd /data/${a}*/${1}*
+    fi
+  }
+
+  case "${#1}" in
+    *2) jc ${1} ;;
+    *4) jc ${1:0:2} ${1:2} ;;
+    *5) jc ${1:0:2} ${1:3} ;;
+    *6) jc ${1:0:2} ${1:2:2} ${1:4:2} ;;
+    *8) jc ${1:0:2} ${1:3:2} ${1:6:2} ;;
+  esac
+}
+export jcd
 
 neofetch
 

@@ -14,6 +14,10 @@ super + Return
 super + d
 	rofi -show drun
 
+# program launcher
+super + g
+  ~/.scripts/johnnygoto.sh
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -40,7 +44,13 @@ XF86Audio{Raise,Lower}Volume{_, + alt}
 
 # mute audio input/output
 XF86Audio{_,Mic}Mute
-  pactl set-{sink,source}-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle
+  pactl set-{sink,source}-mute alsa_{output,input}.pci-0000_00_1f.3.analog-stereo toggle
+super + shift + Scroll_Lock
+  pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
+{_,super} + @Scroll_Lock
+  pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo 1
+super + Scroll_Lock
+  pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo 0
 
 # media player controls
 XF86Audio{Play,Pause,Prev,Next}
@@ -49,6 +59,8 @@ XF86Audio{Play,Pause,Prev,Next}
 # adjust brightness
 XF86MonBrightness{Up,Down}{ + shift,_, + alt}
   light -{A,U} {0.5,2,5}
+super + shift + ctrl + alt + b + {u,d}
+  light -{A,U} 5
 
 # screenshot
 {super + shift + s,Print}
@@ -78,10 +90,6 @@ super + m
 super + y
 	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest node
-super + g
-	bspc node -s biggest
-
 #
 # state/flags
 #
@@ -91,8 +99,8 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # toggle node flags
-super + ctrl + {m,x,y,z,o}
-	bspc node -g {marked,locked,sticky,private,hidden}
+# super + ctrl + {m,x,y,z,o}
+# 	bspc node -g {marked,locked,sticky,private,hidden}
 
 # restore from scratch
 super + ctrl + shift + o

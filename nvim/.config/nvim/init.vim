@@ -3,8 +3,22 @@ filetype off
 
 call plug#begin()
 
+" Color theme
+Plug 'morhetz/gruvbox'
+let g:gruvbox_italic=1
+set termguicolors
+autocmd vimenter * ++nested colorscheme gruvbox
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+autocmd vimenter * hi NonText guibg=NONE ctermbg=NONE
+
 " small changes
 Plug 'tpope/vim-sensible'
+
+" git stuff
+Plug 'tpope/vim-fugitive'
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap <leader>gdh :diffget //2<CR>
+nnoremap <leader>gdl :diffget //3<CR>
 
 " surround selectors
 Plug 'tpope/vim-surround'
@@ -16,6 +30,7 @@ Plug 'tpope/vim-surround'
 " code completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
@@ -24,24 +39,32 @@ Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
 Plug 'iamcco/coc-flutter', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
+Plug 'josa42/coc-go', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'zxqfl/tabnine-vim'
 
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_cmd = 'FZF'
+"let g:ctrlp_cmd = 'FZF'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
 
 " git diff in gutter
 Plug 'airblade/vim-gitgutter'
 
 " comments
 Plug 'tpope/vim-commentary'
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+let g:mkdp_auto_close = 0
 
 " Pug
 Plug 'digitaltoad/vim-pug'
@@ -71,17 +94,28 @@ let g:ackprg = 'rg --no-heading --color never --column'
 Plug 'Yggdroot/indentLine'
 let g:indentLine_setConceal = 2
 let g:indentLine_concealcursor = ''
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*', '*.wiki', '*.tex']
+let g:indentLine_fileTypeExclude = ['vimwiki', 'tex']
+let g:indentLine_bufTypeExclude = ['help', 'terminal', 'vimwiki', 'tex']
+
+set cursorcolumn
+
+" Plug 'nathanaelkane/vim-indent-guides'
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_auto_colors = 0
+" " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=NONE  ctermbg=NONE
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=NONE  ctermbg=NONE
 
 " js and jsx syntax highlighting
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
 " typescript
-Plug 'leafgarland/typescript-vim'
+"Plug 'leafgarland/typescript-vim'
 " Plug 'Quramy/tsuquyomi'
 " Plug 'HerringtonDarkholme/yats.vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'ianks/vim-tsx', { 'for': 'typescript.tsx' }
+"Plug 'ianks/vim-tsx', { 'for': 'typescript.tsx' }
 
 " c sharp
 Plug 'OrangeT/vim-csharp'

@@ -13,7 +13,7 @@ SIZE=$(xrandr | awk '($7 == "current" ){print $8"x"$10}' | sed s/,// )
 
 #scrot $SCREEN && convert $SCREEN -scale 10% -scale 1000% -draw "fill black fill-opacity 0.5 $rectangle" $SCREEN
 #ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -filter_complex "boxblur=10,eq=brightness=-0.15" -vframes 1 $SCREEN
-ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -i ~/Pictures/overlay.png -filter_complex "[0:v]boxblur=5[base],[1:v]scale=180:80[ovrl],[base][ovrl]overlay=25:main_h-overlay_h-25" -vframes 1 $SCREEN
+ffmpeg -loglevel quiet -f x11grab -video_size $SIZE -y -i $DISPLAY -i ~/Pictures/overlay.png -filter_complex "[0:v]boxblur=5[base],[1:v]scale=180:80[ovrl],[base][ovrl]overlay=25:1080-overlay_h-25" -vframes 1 $SCREEN
 #convert $SCREEN -draw "fill black fill-opacity 0.5 $rectangle" $SCREEN
 
 move() {
@@ -59,9 +59,10 @@ lock() {
     killall -SIGUSR2 dunst # Resume notifications
 
     return
+
 	# Post-login dialog box
 	current=$BASHPID
-    pgrep "lock_actual.sh" | grep -v "^${current}$" | xargs kill -9
+	pgrep "lock_actual.sh" | grep -v "^${current}$" | xargs kill -9
 
 	move Activities &
 	OUTPUT=$(zenity --forms --title="Activities" --text="Activities" --add-entry="What do you plan to do?")
@@ -77,9 +78,10 @@ lock() {
 		~/.scripts/lock_actual.sh &
 	fi
 }
+
 lock &
 
-sleep 1
-rm $SCREEN
-
+sleep 0.5
 xset dpms force off
+sleep 0.5
+rm $SCREEN
