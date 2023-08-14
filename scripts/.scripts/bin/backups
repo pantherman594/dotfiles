@@ -8,17 +8,34 @@ fi
 
 lines=$(cryptsetup status backups)
 
-function mount {
+function mount1 {
+  echo "Mounting /backups..."
   if [ "$(echo "$lines" | head -n1)" = "/dev/mapper/backups is inactive." ]; then
     set -e
     cryptsetup open /dev/disk/by-uuid/266f7698-4ec9-4c63-bcd1-5dd0a6b32cc2 backups --key-file /opt/.keys/backups_luks2.bin
     /usr/bin/mount /backups
+    echo "/backups is now mounted."
+    ls /backups
+  else
+    echo "/backups is already mounted."
+  fi
+}
+
+function mount2 {
+  echo "Mounting /backups..."
+  if [ "$(echo "$lines" | head -n1)" = "/dev/mapper/backups is inactive." ]; then
+    set -e
+    cryptsetup open /dev/disk/by-uuid/8d7ec1f5-ea98-4f3c-9d41-815136ae4100 backups --key-file /opt/.keys/backups2_luks2.bin
+    /usr/bin/mount /backups
+    echo "/backups is now mounted."
+    ls /backups
   else
     echo "/backups is already mounted."
   fi
 }
 
 function unmount {
+  echo "Unmounting /backups..."
   if [ "$(echo "$lines" | head -n1)" != "/dev/mapper/backups is inactive." ]; then
     if [ -f /backups/backup.lock ]; then
       echo "ERROR: Cannot unmount, backup is still in progress."
@@ -33,6 +50,7 @@ function unmount {
       umount "${device}"{1,2}
       set -e
       udisksctl power-off -b "$device"
+      echo "/backups is now unmounted."
     fi
   else
     echo "/backups is not mounted."
@@ -46,7 +64,13 @@ function usage {
 if [ "$1" != "" ]; then 
   case $1 in
     mount)
-      mount
+      mount2
+      ;;
+    mount1)
+      mount1
+      ;;
+    mount2)
+      mount2
       ;;
     unmount)
       unmount

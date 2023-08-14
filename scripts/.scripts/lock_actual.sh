@@ -45,17 +45,17 @@ lock() {
     killall -SIGUSR1 dunst # Pause notifications
     i3lock \
         -n -e -i $SCREEN --screen=1 --indicator \
-        --timepos="x+45:iy+11" --timestr="%H:%M"\
-        --datepos="tx+w-327:ty" \
+        --time-pos="x+45:iy+11" --time-str="%H:%M"\
+        --date-pos="tx+w-327:ty" \
         --time-align=1 --date-align=1 --layout-align=1 \
-        --clock --force-clock --datestr="" \
-        --insidecolor=00000000 --ringcolor=ffffffff --line-uses-inside \
-        --keyhlcolor=0066a6ff --bshlcolor=d23c3dff --separatorcolor=00000000 \
-        --insidevercolor=f2cf4dff --insidewrongcolor=d23c3dff \
+        --clock --force-clock --date-str="" \
+        --inside-color=00000000 --ring-color=ffffffff --line-uses-inside \
+        --keyhl-color=0066a6ff --bshl-color=d23c3dff --separator-color=00000000 \
+        --insidever-color=f2cf4dff --insidewrong-color=d23c3dff \
         --time-font=Oxygen --date-font=Oxygen \
-        --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+157:h+y-65" \
-        --radius=20 --verifsize=1 --wrongsize=1 --modsize=8 --ring-width=3 --veriftext="" --wrongtext="" \
-        --verifcolor=ffffffff --wrongcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff
+        --ringver-color=ffffffff --ringwrong-color=ffffffff --ind-pos="x+157:h+y-65" \
+        --radius=20 --verif-size=1 --wrong-size=1 --ring-width=3 --verif-text="" --wrong-text="" \
+        --verif-color=ffffffff --wrong-color=ffffffff --time-color=ffffffff --date-color=ffffffff
     killall -SIGUSR2 dunst # Resume notifications
 
     return

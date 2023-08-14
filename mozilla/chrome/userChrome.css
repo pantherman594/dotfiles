@@ -13,8 +13,8 @@
 /*Collapse in default state and add transition*/
 #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] {
   overflow: hidden;
-  min-width: 113px;
-  max-width: 113px;
+  min-width: 85px;
+  max-width: 85px;
   transition: all 0.2s ease;
   border-right: 1px solid #0c0c0d;
   z-index: 2;
@@ -27,7 +27,7 @@
   max-width: 226px !important;
 }
 
-Full Auto-show/hide Theme
+/* Full Auto-show/hide Theme */
 
 /* Hide main tabs toolbar */
 #main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
@@ -54,7 +54,7 @@ Full Auto-show/hide Theme
 
 /* Shrink sidebar until hovered, when using Tree Style Tab. */
 :root {
-  --thin-tab-width: 113px;
+  --thin-tab-width: 85px;
   --wide-tab-width: 226px;
 }
 #sidebar-box:not([sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]) {

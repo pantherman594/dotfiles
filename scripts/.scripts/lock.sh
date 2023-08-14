@@ -1,6 +1,9 @@
 #!/bin/bash
 
-if xrdb -query | grep -q "`cat ~/.config/polybar/caffine_off`"
+if pgrep -x i3lock >/dev/null
+then
+    xset dpms force off
+elif xrdb -query | grep -q "`cat ~/.config/polybar/caffine_off`"
 then
     xset dpms force off
     sleep 30

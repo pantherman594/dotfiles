@@ -15,7 +15,8 @@ bspc config pointer_follows_monitor true
 # bspc rule -a mplayer2 state=floating
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
-bspc rule -a Zathura state=tiled
+# bspc rule -a Zathura state=tiled
+bspc config external_rules_command "/home/pantherman594/.config/bspwm/external_rules"
 
 bspc wm -o
 bspc wm -O eDP-1 DP-1-1 DP-1-3
@@ -60,9 +61,9 @@ if [ $init = 1 ]; then
   xdotool key super+Return; sleep 3; xdotool type "~/.scripts/toggle_redshift.sh &"; xdotool key Return; sleep 1; xdotool key super+shift+q
   export _JAVA_AWT_WM_NONREPARENTING=1
 
-  bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 1920x0 --output DP-1-3 --mode 1440x900 --scale 1.2x1.2 --auto --rotate left --pos 3840x0 || xrandr --output eDP-1 --primary"
+  bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 1920x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 4480x0"
 
-  bspc monitor DP-1-3-8 -f
+  bspc monitor eDP-1 -f
 
   # start redshift and caffine
   ~/.scripts/toggle_caffine.sh &
@@ -82,6 +83,10 @@ test -f ~/.Xkeymap && xkbcomp ~/.Xkeymap $DISPLAY
 
 # Disable scroll lock repeat for push to talk
 xset -r 78
+
+# Prevent the screen from automatically turning off (handled by lock.sh)
+xset dpms 0 0 0
+xset s off
 
 # Trackpad tweaks
 xinput set-prop "Elan TrackPoint" "libinput Accel Speed" 0.5

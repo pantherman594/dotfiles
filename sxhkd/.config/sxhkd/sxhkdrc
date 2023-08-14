@@ -5,6 +5,8 @@
 # lock screen
 super + shift + x
   ~/.scripts/lock_actual.sh
+super + x
+  pyxtrlock
 
 # terminal emulator
 super + Return
@@ -28,7 +30,7 @@ super + Escape
 
 # password manager
 alt + b
-  bwmenu
+  bwmenu --auto-lock -1
 
 # calculator
 alt + c
@@ -44,7 +46,8 @@ XF86Audio{Raise,Lower}Volume{_, + alt}
 
 # mute audio input/output
 XF86Audio{_,Mic}Mute
-  pactl set-{sink,source}-mute alsa_{output,input}.pci-0000_00_1f.3.analog-stereo toggle
+  {a="sink"; b="output";, a="source"; b="input";} \ 
+  pactl set-${a}-mute alsa_${b}.pci-0000_00_1f.3.analog-stereo toggle
 super + shift + Scroll_Lock
   pactl set-source-mute alsa_input.pci-0000_00_1f.3.analog-stereo toggle
 {_,super} + @Scroll_Lock
@@ -69,6 +72,26 @@ super + shift + ctrl + alt + b + {u,d}
 # clear clipboard formatting
 ctrl + shift + v
   xclip -o -sel clip | xclip -sel clip && sleep 0.1 && xdotool key Ctrl+v
+
+# capitalize
+# ctrl + alt + v
+#   sleep 0.2 && xdotool key Ctrl+a && sleep 0.2 && xdotool key Ctrl+c && sleep 0.2 && xclip -o -sel clip | tr a-z A-Z | xclip -sel clip && sleep 0.1 && xdotool key Ctrl+v
+
+# close notification
+# ctrl + space
+  # dunstctl close
+
+# close all notifications
+ctrl + shift + space
+  dunstctl close-all
+
+# pop last notification
+ctrl + grave
+  dunstctl history-pop
+
+# pop last notification
+ctrl + shift + grave
+  dunstctl context
 
 #
 # bspwm hotkeys
@@ -97,6 +120,9 @@ super + y
 # set the window state
 super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+super + ctrl + s
+	bspc node -g sticky
 
 # toggle node flags
 # super + ctrl + {m,x,y,z,o}

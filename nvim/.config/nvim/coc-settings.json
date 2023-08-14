@@ -9,6 +9,16 @@
            "directory": ".ccls-cache"
          }
        }
+    },
+    "ocaml-lsp": {
+      "command": "opam",
+      "args": ["config", "exec", "--", "ocamllsp"],
+      "filetypes": ["ocaml", "reason"]
+    },
+    "csharp-ls": {
+      "command": "csharp-ls",
+      "filetypes": ["cs"],
+      "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
     }
   },
   "prettier": {
@@ -22,12 +32,8 @@
       "path": "/usr/lib/jvm/java-8-openjdk"
     },
     {
-      "name": "JavaSE-11",
-      "path": "/usr/lib/jvm/java-11-openjdk"
-    },
-    {
-      "name": "JavaSE-14",
-      "path": "/usr/lib/jvm/java-14-openjdk",
+      "name": "JavaSE-16",
+      "path": "/usr/lib/jvm/java-16-openjdk",
       "default": true
     }
   ]

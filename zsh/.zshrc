@@ -183,6 +183,11 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export VISIBLE=now
 
+export GOPATH="$HOME/go"
+export PATH="$PATH:$HOME/go/bin"
+
+export PATH="$PATH:$HOME/.cargo/bin"
+
 export FrameworkPathOverride=~/.config/coc/extensions/coc-omnisharp-data/server/omnisharp
 
 export CHROME_EXECUTABLE=/usr/bin/chromium
@@ -191,6 +196,12 @@ export SXHKD_SHELL=/bin/bash
 
 export CTRL_HOST=tt.dav.sh
 export CTRL_PORT=443
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+eval "$(pyenv init -)"
 
 jcd() {
   jc() {
@@ -218,6 +229,11 @@ jcd() {
   esac
 }
 export jcd
+
+if [ -n "$DESKTOP_SESSION" ];then
+  eval $(gnome-keyring-daemon --start 2> /dev/null)
+  export SSH_AUTH_SOCK
+fi
 
 neofetch
 

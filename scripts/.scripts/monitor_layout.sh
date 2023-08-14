@@ -1,13 +1,14 @@
 #!/bin/bash
 
 PRIMARY="--output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
-SECONDARY="--output DP-1-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
-TERTIARY="--output DP-1-3 --mode 1440x900 --scale 1.2x1.2 --auto --rotate left"
+SECONDARY="--output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal"
+TERTIARY="--output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal"
 
 # SURFACE_PRESET="xrandr --newmode \"2736x1824\"  426.00  2736 2952 3248 3760  1824 1827 1837 1890 -hsync +vsync && xrandr --addmode VIRTUAL1 2736x1824 && xrandr --output eDP1 --scale 1x1 --auto --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
 SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
+SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output HDMI-2 --mode 1920x1080 --scale 0.9999x0.9999 --auto --pos 1920x0"
 DUAL_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0"
-TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 3840x0"
+TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 4480x0"
 
 XRANDR=$(which xrandr)
 
@@ -91,8 +92,8 @@ then
                 POS_B="${DIMENS_X[entry_a]}x0"
 
               TILES[$index]="Dual Screen ${MONITORS[$entry_a]} -> ${MONITORS[$entry_b]}"
-              COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --scale 1x1 --auto --pos $POS_A \
-                                --output ${MONITORS[$entry_b]} --scale 1x1 --auto --pos $POS_B"
+              COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --scale 0.9999x0.9999 --auto --pos $POS_A \
+                                --output ${MONITORS[$entry_b]} --scale 0.9999x0.9999 --auto --pos $POS_B"
               echo ${COMMANDS[$index]}
 
               index+=1

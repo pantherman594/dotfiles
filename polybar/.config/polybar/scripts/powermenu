@@ -2,7 +2,7 @@
 
 ## Created By Aditya Shakya
 
-MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 40 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 6 <<< "> Lock|> Logout|> Suspend|> Reboot|> Windows|> Shutdown")"
+MENU="$(rofi -sep "|" -dmenu -i -p 'System' -theme ~/.config/rofi/powermenu.rasi <<< "> Lock|> Logout|> Suspend|> Reboot|> Windows|> Shutdown")"
             case "$MENU" in
                 *Lock) ~/.scripts/lock_actual.sh ;;
                 *Logout) bspc quit  ;;

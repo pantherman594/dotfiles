@@ -1,11 +1,7 @@
 configuration {
 	modi: "drun,find:~/.scripts/finder.sh,window";
-	width: 70;
-	lines: 5;
-	columns: 2;
 	font: "iosevka 14";
 	location: 0;
-	padding: 40;
 	show-icons: true;
 	drun-match-fields: "name,generic,categories";
 	sidebar-mode: true;
@@ -13,11 +9,6 @@ configuration {
 	matching: "fuzzy";
 	sort: true;
 	sorting-method: "fzf";
-	line-margin: 5;
-	line-padding: 10;
-	separator-style: "none";
-	scrollbar-width: 3;
-	color-normal: "#002f343f,#ddf3f4f5,#002f343f,#4400aae3,#ffffff";
-	color-active: "#4400aae3,#ddf3f4f5,#4400aae3,#8800aae3,#ffffff";
-	color-window: "#cc2f343f,#00262930,#002f343f";
 }
+
+@theme "slate"

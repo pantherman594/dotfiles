@@ -1,13 +1,14 @@
 #!/bin/bash
 
 active_monitors=($(bspc query -M --names | sort | uniq))
-connected=($(xrandr | grep -E "[^s]connected\s+(primary)?\s+[0-9]" | cut -d' ' -f1))
+connected=($(xrandr | grep -E "[^s]connected(\s+primary)?\s+[0-9]" | cut -d' ' -f1))
 
 to_remove=($(echo ${active_monitors[@]} ${connected[@]} ${connected[@]} | tr ' ' '\n' | sort | uniq -u))
 
 dest=${connected[0]}
 
 for monitor in ${to_remove[@]}; do
+  echo $monitor
   bspc monitor -f $monitor
 
   # list desktops
@@ -16,6 +17,7 @@ for monitor in ${to_remove[@]}; do
   bspc monitor -a 11
 
   for desk in ${desks[@]}; do
+    echo $desk "->" $dest
     bspc desktop $desk -m $dest
   done
 
@@ -23,7 +25,8 @@ for monitor in ${to_remove[@]}; do
 done
 
 to_add=($(echo ${connected[@]} ${active_monitors[@]} ${active_monitors[@]} | tr ' ' '\n' | sort | uniq -u))
-for monitor in ${to_remove[@]}; do
+for monitor in ${to_add[@]}; do
+  echo "Add $monitor"
   dim=$(xrandr | grep $monitor | perl -n -e'/(\d+x\d+\+\d+\+\d+)/ && print $1')
 
   bspc wm -a $monitor $dim

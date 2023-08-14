@@ -18,7 +18,6 @@ do
 done
 
 # Launch bars
-polybar -c ~/.config/polybar/config.ini primary -q -r &
 launchedSecondary=false
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
@@ -35,3 +34,4 @@ else
   polybar secondary -q -r &
   polybar tertiary  -q -r &
 fi
+polybar -c ~/.config/polybar/config.ini primary -q -r 2>/tmp/polylog &

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+exit(0)
+
 from datetime import datetime
 from time import sleep
 import os
@@ -20,7 +22,7 @@ def rsync(source, destination, *extraFlags, compress=True):
 
 def backup():
     rsync('/boot/', '/backups/.sync/brijuni/boot', compress=False)
-    rsync('/data/', '/backups/.sync/brijuni/data', '--exclude="90-99 Misc/93 VMs/93.12 OSX-KVM/mac_hdd_ng.img"', compress=False)
+    rsync('/data/', '/backups/.sync/brijuni/data', '--exclude=90-99 Misc/93 VMs/*', compress=False)
     subprocess.call(['/usr/bin/mkdir', '-p', '/backups/.sync/brijuni/windows/Users/david'])
     rsync('/windows/Users/david/', '/backups/.sync/brijuni/windows/Users/david', '--exclude=AppData/Local/Microsoft/WindowsApps/MicrosoftEdge.exe', compress=False)
 
@@ -65,12 +67,13 @@ if __name__ == '__main__':
     dir_first_exists = os.path.isdir(SNAPSHOTS_DIR)
     if not dir_first_exists:
         if should_notify:
-            subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\' -t 60000', shell=True)
+            subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \'backup.py\' \'Plug in external hard drive to start backup.\' -t 300000', shell=True)
             sleep(5 * 60)
 
     if dir_first_exists or (should_notify and os.path.isdir(SNAPSHOTS_DIR)):
         if os.path.exists(LOCK_FILE):
             print('Lock file exists. Exiting...')
+            subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \'backup.py\' \'Backup unable to begin because lockfile exists.\' -t 300000', shell=True)
             raise SystemExit()
 
         with open(LOCK_FILE, 'x') as f:
@@ -89,7 +92,8 @@ if __name__ == '__main__':
 
         print("Backups complete.")
         if should_notify:
-            subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \'backup.py\' \'Backups complete.\' -t 60000', shell=True)
+            subprocess.call(['/usr/bin/sudo', '/home/pantherman594/bin/backups', 'unmount'])
+            subprocess.call('sudo -u pantherman594 DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \'backup.py\' \'Backups complete. Please unplug the external hard drive.\' -t 300000', shell=True)
 
     if locked:
         os.remove(LOCK_FILE)
