@@ -17,21 +17,24 @@ do
     fi
 done
 
+POLYBAR="polybar -c ~/.config/polybar/config.ini -q -r"
+
 # Launch bars
-launchedSecondary=false
+launchedBars=0
 if type "xrandr"; then
-  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    if [[ "$m" != "eDP-1" ]]; then
-      if [ "$launchedSecondary" = false ]; then
-        MONITOR=$m polybar -c ~/.config/polybar/config.ini secondary -q -r &
-        launchedSecondary=true
-      else
-        MONITOR=$m polybar -c ~/.config/polybar/config.ini tertiary -q -r &
-      fi
+  for m in $(xrandr -q | perl -n -E 'if (/\bdisconnected\b/) { $dev = ""; } elsif (/\bconnected\b/) { ($dev) = ($_ =~ /^(\S+)/); } elsif (/\*/ and $dev ne "") { print "$dev\n"; }'); do
+    if [ "$launchedBars" = 0 ]; then
+      MONITOR=$m $POLYBAR primary 2>/tmp/polylog &
+    elif [ "$launchedBars" = 1 ]; then
+      MONITOR=$m $POLYBAR secondary &
+    else
+      MONITOR=$m $POLYBAR tertiary &
     fi
+
+    launchedBars=$(( $launchedBars + 1 ))
   done
 else
-  polybar secondary -q -r &
-  polybar tertiary  -q -r &
+  $POLYBAR primary 2>/tmp/polylog &
+  $POLYBAR secondary &
+  $POLYBAR tertiary  &
 fi
-polybar -c ~/.config/polybar/config.ini primary -q -r 2>/tmp/polylog &

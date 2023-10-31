@@ -1,0 +1,29 @@
+@import "slate"
+
+window {
+  location: north east;
+  anchor: north east;
+  x-offset: -10;
+  y-offset: 43;
+  width: 140px;
+}
+
+inputbar {
+  padding: 0;
+}
+
+prompt {
+  enabled: false;
+}
+
+entry {
+  padding: 10px 24px;
+}
+
+listview {
+  dynamic: true;
+}
+
+element {
+  padding: 5px;
+}

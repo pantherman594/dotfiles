@@ -8,7 +8,8 @@ TERTIARY="--output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate
 SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
 SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output HDMI-2 --mode 1920x1080 --scale 0.9999x0.9999 --auto --pos 1920x0"
 DUAL_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0"
-TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 4480x0"
+# TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 4480x0"
+TRIPLE_PRESET="xrandr ${PRIMARY} --off ${SECONDARY} --pos 0x0 ${TERTIARY} --pos 2560x0"
 
 XRANDR=$(which xrandr)
 

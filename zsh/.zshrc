@@ -1,3 +1,5 @@
+#zmodload zsh/zprof
+
 export GPG_TTY=$(tty)
 # If running trom tty1 start sway
 #if [ $(tty) = "/dev/tty1" ]; then
@@ -71,6 +73,7 @@ plugins=(
   zsh-autosuggestions
   history-substring-search
   timer
+  zsh-nvm-lazy-load
   zsh-syntax-highlighting # Must be last
 )
 
@@ -168,10 +171,13 @@ export EDITOR="$VISUAL"
 # Import colorscheme from 'wal'
 # (cat /home/pantherman594/.cache/wal/sequences &)
 
-autoload -Uz compinit
-compinit
+# compinit already done in oh-my-zsh
+# autoload -Uz compinit
+# compinit
 
-source /usr/share/nvm/init-nvm.sh
+#source /usr/share/nvm/init-nvm.sh # now lazy loaded with plugin
+
+export WORDCHARS='*?.[]~=&;!#$%^(){}<>'
 
 export PATH=$PATH:/opt/bin
 export PATH=$PATH:~/bin
@@ -241,3 +247,5 @@ neofetch
 test -r /home/pantherman594/.opam/opam-init/init.zsh && . /home/pantherman594/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 add-zsh-hook -d precmd prompt_grml_precmd
+
+#zprof

@@ -61,7 +61,8 @@ if [ $init = 1 ]; then
   xdotool key super+Return; sleep 3; xdotool type "~/.scripts/toggle_redshift.sh &"; xdotool key Return; sleep 1; xdotool key super+shift+q
   export _JAVA_AWT_WM_NONREPARENTING=1
 
-  bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 1920x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 4480x0"
+  # bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 1920x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 4480x0"
+  bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --off --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 2560x0"
 
   bspc monitor eDP-1 -f
 
