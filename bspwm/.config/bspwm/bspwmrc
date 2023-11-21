@@ -19,9 +19,8 @@ bspc config pointer_follows_monitor true
 bspc config external_rules_command "/home/pantherman594/.config/bspwm/external_rules"
 
 bspc wm -o
-bspc wm -O eDP-1 DP-1-1 DP-1-3
+bspc wm -O eDP-1 DP-1-1 DP-1-2 DP-1-3
 
-num_monitors=$(bspc query -M | wc -l)
 init=1
 for m in $(bspc query -D -d .active --names); do
   if [ $m != "Desktop" ]; then
@@ -33,12 +32,6 @@ done
 if [ $init = 1 ]; then
   # subscribe to bspwm events
   ~/.scripts/bspwm_subscriptions.sh &
-
-  # setup initial monitor config
-  for (( i=1; i<=$num_monitors; i++ )); do
-    bspc monitor ^${i} -d $i
-    bspc desktop -f ^${i}:${i}
-  done
 
   #
   # run once
@@ -62,9 +55,18 @@ if [ $init = 1 ]; then
   export _JAVA_AWT_WM_NONREPARENTING=1
 
   # bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 1920x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 4480x0"
-  bash -c "[[ $(xrandr | grep ' connected' | wc -l) == 3 ]] && xrandr --output eDP-1 --off --output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal --pos 0x0 --output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal --pos 2560x0"
 
-  bspc monitor eDP-1 -f
+  ~/.scripts/monitor_layout.sh --auto
+
+  num_monitors=$(bspc query -M | wc -l)
+
+  # setup initial monitor config
+  for (( i=1; i<=$num_monitors; i++ )); do
+    bspc monitor ^${i} -d $i
+    bspc desktop -f ^${i}:${i}
+  done
+
+  #bspc monitor eDP-1 -f
 
   # start redshift and caffine
   ~/.scripts/toggle_caffine.sh &
@@ -74,7 +76,8 @@ if [ $init = 1 ]; then
   ~/.scripts/battery.sh &
 fi
 
-xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999
+# xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999
+bash -c "[[ $(xrandr --listactivemonitors | grep 'eDP-1') != \"\" ]] && xrandr --output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --primary"
 ~/.scripts/polybar.sh
 ~/.scripts/wallpaper.sh
 ~/.scripts/picom.sh &

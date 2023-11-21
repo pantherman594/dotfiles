@@ -22,13 +22,16 @@ POLYBAR="polybar -c ~/.config/polybar/config.ini -q -r"
 # Launch bars
 launchedBars=0
 if type "xrandr"; then
-  for m in $(xrandr -q | perl -n -E 'if (/\bdisconnected\b/) { $dev = ""; } elsif (/\bconnected\b/) { ($dev) = ($_ =~ /^(\S+)/); } elsif (/\*/ and $dev ne "") { print "$dev\n"; }'); do
+  for m in $(xrandr --listactivemonitors | tail -n+2 | awk -F ' ' '{print $NF}'); do
     if [ "$launchedBars" = 0 ]; then
       MONITOR=$m $POLYBAR primary 2>/tmp/polylog &
+      echo MONITOR=$m $POLYBAR primary 2>/tmp/polylog &
     elif [ "$launchedBars" = 1 ]; then
       MONITOR=$m $POLYBAR secondary &
+      echo MONITOR=$m $POLYBAR secondary &
     else
       MONITOR=$m $POLYBAR tertiary &
+      echo MONITOR=$m $POLYBAR tertiary &
     fi
 
     launchedBars=$(( $launchedBars + 1 ))

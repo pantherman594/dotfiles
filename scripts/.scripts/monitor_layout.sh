@@ -1,28 +1,47 @@
 #!/bin/bash
 
-PRIMARY="--output eDP-1 --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
-SECONDARY="--output DP-1-2 --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal"
-TERTIARY="--output DP-1-3 --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal"
+PRIMARY_MON="eDP-1"
+SECONDARY_MON="DP-1-2"
+TERTIARY_MON="DP-1-3"
+
+PRIMARY="--output $PRIMARY_MON --mode 1920x1080 --scale 0.9999x0.9999 --auto --rotate normal"
+SECONDARY="--output $SECONDARY_MON --mode 2560x1440 --rate 75 --scale 0.9999x0.9999 --auto --rotate normal"
+TERTIARY="--output $TERTIARY_MON --mode 2560x1440 --scale 0.9999x0.9999 --auto --rotate normal"
 
 # SURFACE_PRESET="xrandr --newmode \"2736x1824\"  426.00  2736 2952 3248 3760  1824 1827 1837 1890 -hsync +vsync && xrandr --addmode VIRTUAL1 2736x1824 && xrandr --output eDP1 --scale 1x1 --auto --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
-SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
-SURFACE_PRESET="xrandr ${PRIMARY} --pos 0x0 --output HDMI-2 --mode 1920x1080 --scale 0.9999x0.9999 --auto --pos 1920x0"
-DUAL_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0"
+#SURFACE_PRESET="xrandr ${PRIMARY} --primary --pos 0x0 --output VIRTUAL1 --mode 2736x1824 --scale 0.5x0.5 --auto --pos 1920x0"
+#SURFACE_PRESET="xrandr ${PRIMARY} --primary --pos 0x0 --output HDMI-2 --mode 1920x1080 --scale 0.9999x0.9999 --auto --pos 1920x0"
+SINGLE_PRESET="xrandr ${PRIMARY} --primary --pos 0x0"
+DUAL_PRESET="xrandr ${PRIMARY} --primary --pos 0x0 ${SECONDARY} --pos 1920x0"
 # TRIPLE_PRESET="xrandr ${PRIMARY} --pos 0x0 ${SECONDARY} --pos 1920x0 ${TERTIARY} --pos 4480x0"
-TRIPLE_PRESET="xrandr ${PRIMARY} --off ${SECONDARY} --pos 0x0 ${TERTIARY} --pos 2560x0"
+TRIPLE_PRESET="xrandr ${SECONDARY} --primary --pos 0x0 ${TERTIARY} --pos 2560x0 --output $PRIMARY_MON --off"
 
-XRANDR=$(which xrandr)
+SINGLE_PRESET_MONS=$(printf "%s\n" $PRIMARY_MON)
+DUAL_PRESET_MONS=$(printf "%s\n%s\n" $PRIMARY_MON $SECONDARY_MON)
+TRIPLE_PRESET_MONS=$(printf "%s\n%s\n%s\n" $PRIMARY_MON $SECONDARY_MON $TERTIARY_MON)
 
-MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
-INACTIVE_MONITORS=( $( ${XRANDR} | awk '( $2 == "disconnected" ){ print $1 }' ) )
-DIMENS_X=( $( ${XRANDR} | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/x.\*// ) )
-DIMENS_Y=( $( ${XRANDR} | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/\+.\*// | sed s/.\*x// ) )
+XRANDR_OUT=$(xrandr)
+
+MONITORS=( $( echo "${XRANDR_OUT}" | awk '( $2 == "connected" ){ print $1 }' ) )
+INACTIVE_MONITORS=( $( echo "${XRANDR_OUT}" | awk '( $2 == "disconnected" ){ print $1 }' ) )
+DIMENS_X=( $( echo "${XRANDR_OUT}" | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/x.\*// ) )
+DIMENS_Y=( $( echo "${XRANDR_OUT}" | sed s/primary\ // | awk '( $2 == "connected" ){ print $3 }' | sed s/\+.\*// | sed s/.\*x// ) )
 
 NUM_MONITORS=${#MONITORS[@]}
 NUM_INACTIVE_MONITORS=${#INACTIVE_MONITORS[@]}
 
-TITLES=()
-COMMANDS=()
+
+function test_preset() {
+    if [ $NUM_MONITORS -lt $(echo "$1" | wc -l) ]; then
+        return 1
+    fi
+
+    if [[ $(comm -13 <(printf "%s\n" "${MONITORS[@]}" | sort) <(echo "$1" | sort)) != "" ]]; then
+        return 1
+    fi
+
+    return 0
+}
 
 
 function gen_xrandr_only() {
@@ -46,7 +65,30 @@ function gen_xrandr_only() {
     echo $cmd
 }
 
+##
+#  Generate entries, where first is key.
+##
+function gen_entries() {
+    for a in $(seq 0 $(( ${#TILES[@]} -1 )))
+    do
+        echo $a ${TILES[a]}
+    done
+}
 
+function prompt_layout() {
+  # Call menu
+  SEL=$( gen_entries | rofi -i -matching fuzzy -dmenu -p "Monitor Setup" -a 0 -no-custom  | awk '{print $1}' )
+  
+  # Call xrandr
+  echo ${COMMANDS[$SEL]}
+}
+
+function get_default() {
+  echo ${COMMANDS[2]}
+}
+
+TITLES=()
+COMMANDS=()
 
 declare -i index=0
 TILES[$index]="Cancel"
@@ -57,17 +99,24 @@ TILES[$index]="GUI (arandr)"
 COMMANDS[$index]="arandr"
 index+=1
 
-if [ $NUM_MONITORS -ge 3 ]
+if test_preset "$TRIPLE_PRESET_MONS"
 then
     TILES[$index]="Triple (Preset)"
     COMMANDS[$index]=${TRIPLE_PRESET}
     index+=1
 fi
 
-if [ $NUM_MONITORS -ge 2 ]
+if test_preset "$DUAL_PRESET_MONS"
 then
     TILES[$index]="Dual (Preset)"
     COMMANDS[$index]=${DUAL_PRESET}
+    index+=1
+fi
+
+if test_preset "$SINGLE_PRESET_MONS"
+then
+    TILES[$index]="Single (Preset)"
+    COMMANDS[$index]=${SINGLE_PRESET}
     index+=1
 fi
 
@@ -122,34 +171,31 @@ then
   done
 fi
 
-TILES[$index]="Surface (Preset)"
-COMMANDS[$index]=${SURFACE_PRESET}
-index+=1
+#TILES[$index]="Surface (Preset)"
+#COMMANDS[$index]=${SURFACE_PRESET}
+#index+=1
 
+  
+  
+PREV=$XRANDR_OUT
 
-##
-#  Generate entries, where first is key.
-##
-function gen_entries() {
-    for a in $(seq 0 $(( ${#TILES[@]} -1 )))
-    do
-        echo $a ${TILES[a]}
-    done
-}
+if [[ "$1" == "--auto" ]]; then
+    COMMAND=$(get_default)
+else
+    COMMAND=$(prompt_layout)
+fi
 
-PREV=$(xrandr)
+echo "$COMMAND"
+bash -c "$COMMAND"
 
-# Call menu
-SEL=$( gen_entries | rofi -i -matching fuzzy -dmenu -p "Monitor Setup" -a 0 -no-custom  | awk '{print $1}' )
-
-# Call xrandr
-echo ${COMMANDS[$SEL]}
-bash -c "${COMMANDS[$SEL]}"
-
-NEW=$(xrandr)
-
-if [[ "$PREV" != "$NEW" ]]
-then
+if [[ "$1" == "--auto" ]]; then
     ~/.scripts/remove_inactive_monitors.sh
-    bspc wm -r || i3-msg restart
+else
+    NEW=$(xrandr)
+
+    if [[ "$PREV" != "$NEW" ]]
+    then
+        ~/.scripts/remove_inactive_monitors.sh
+        bspc wm -r || i3-msg restart
+    fi
 fi
